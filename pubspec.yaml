@@ -20,7 +20,9 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
-    - assets/images/menu/
+    - assets/images/alphabet_libras/
+    - assets/gifs/
+    - assets/gifs/menu/
   fonts:
     - family: DynaPuff
       fonts:
@@ -28,3 +30,6 @@ flutter:
         - asset: assets\fonts\DynaPuff-Medium.ttf
         - asset: assets\fonts\DynaPuff-SemiBold.ttf
         - asset: assets\fonts\DynaPuff-Bold.ttf
+    - family: NationalFirstFontDotted
+      fonts:
+        - asset: assets\fonts\NationalFirstFontDotted-ldjD.ttf

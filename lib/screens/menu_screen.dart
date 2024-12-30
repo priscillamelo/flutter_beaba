@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_beaba/components/menu_button_component.dart';
+import 'package:flutter_beaba/models/shapes_buttons_menu.dart';
 import 'package:flutter_beaba/routes/screen_routes.dart';
 
 class MenuScreen extends StatelessWidget {
@@ -34,73 +36,64 @@ class MenuScreen extends StatelessWidget {
   }
 }
 
-class MenuWidget extends StatelessWidget {
+class MenuWidget extends StatefulWidget {
   const MenuWidget({super.key});
+
+  @override
+  State<MenuWidget> createState() => _MenuWidgetState();
+}
+
+class _MenuWidgetState extends State<MenuWidget> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return GridView.count(
       crossAxisCount: 2,
-      mainAxisSpacing: 24,
-      crossAxisSpacing: 32,
+      mainAxisSpacing: 16,
+      crossAxisSpacing: 16,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       children: [
-        ElevatedButton(
-          style: ButtonStyle(
-            backgroundColor: const WidgetStatePropertyAll<Color>(Colors.pink),
-            shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
-            )),
-          ),
-          onPressed: () {
-            Navigator.pushNamed(context, ScreenRoutes.kAbcDrawingScreen);
-          },
-          child: Image.asset('assets/images/menu/menu_abc.png'),
-        ),
-        ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor: const WidgetStatePropertyAll<Color>(Colors.blue),
-              shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(60),
-              )),
-            ),
-            onPressed: () {
-              Navigator.pushNamed(context, ScreenRoutes.kNumbersDrawingScreen);
-            },
-            child: Image.asset('assets/images/menu/menu_numbers.png')),
-        ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor:
-                  const WidgetStatePropertyAll<Color>(Colors.purple),
-              shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100),
-              )),
-            ),
-            onPressed: () {
-              Navigator.pushNamed(context, ScreenRoutes.kColorMatchingScreen);
-            },
-            child: Image.asset('assets/images/menu/menu-colors.png')),
-        ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor: const WidgetStatePropertyAll<Color>(Colors.pink),
-              shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100),
-              )),
-            ),
-            onPressed: () {
-              Navigator.pushNamed(context, ScreenRoutes.kShapesScreen);
-            },
-            child: Image.asset('assets/images/menu/menu-shapes.png')),
-        ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor:
-                  const WidgetStatePropertyAll<Color>(Colors.amber),
-              shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100),
-              )),
-            ),
-            onPressed: () {},
-            child: Image.asset('assets/images/menu/menu_libras.png')),
+        MenuButtonComponent.buildCustomButton(
+            context: context,
+            routes: ScreenRoutes.kAbcDrawingScreen,
+            gif: Image.asset('assets/gifs/menu/menu-abc.gif'),
+            clipper: OctagonClipper(),
+            color: Colors.pink.shade100),
+        MenuButtonComponent.buildCustomButton(
+            context: context,
+            routes: ScreenRoutes.kNumbersDrawingScreen,
+            gif: Image.asset('assets/gifs/menu/menu-numbers.gif'),
+            clipper: HexagonClipper(),
+            color: Colors.blue.shade100),
+        MenuButtonComponent.buildCustomButton(
+            context: context,
+            routes: ScreenRoutes.kShapesScreen,
+            gif: Image.asset('assets/gifs/menu/menu-shapes.gif'),
+            clipper: DiamondClipper(),
+            color: Colors.green.shade100),
+        MenuButtonComponent.buildCustomButton(
+            context: context,
+            routes: ScreenRoutes.kRecognizeColorsScreen,
+            gif: Image.asset('assets/gifs/menu/menu-recognize-colors.gif'),
+            clipper: PentagonClipper(),
+            color: Colors.deepOrange.shade200),
+        MenuButtonComponent.buildCustomButton(
+            context: context,
+            routes: ScreenRoutes.kColorMatchingScreen,
+            gif: Image.asset('assets/gifs/menu/menu-colors-matching.gif'),
+            clipper: SquareClipper(),
+            color: Colors.purple.shade100),
+        MenuButtonComponent.buildCustomButton(
+            context: context,
+            routes: ScreenRoutes.kIdentifyAlphabetLibras,
+            gif: Image.asset(
+                'assets/gifs/menu/menu-identify-alphabet-libras.gif'),
+            clipper: OvalClipper(),
+            color: Colors.amber.shade100),
       ],
     );
   }

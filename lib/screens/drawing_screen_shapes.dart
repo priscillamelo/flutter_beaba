@@ -142,8 +142,7 @@ class _DrawingScreenState extends State<DrawingScreen> {
     img.Image? imgUser = img.decodeImage(imageUser);
 
     if (imgTrace == null || imgUser == null) {
-      debugPrint('Erro: Falha ao decodificar uma ou ambas as imagens.');
-      return;
+      throw Exception('Erro: Falha ao decodificar uma ou ambas as imagens.');
     }
 
     // Calcula os pixels cobertos
@@ -182,10 +181,6 @@ class _DrawingScreenState extends State<DrawingScreen> {
     } else {
       _showDialogImage(!winner);
     }
-    debugPrint('Total Pixels da letra: $totalPixels1');
-    debugPrint('Total Pixels da letra: $totalPixels2');
-    debugPrint('Pixels cobertos: $coveredPixels');
-    debugPrint('Percentual: $newCoveragePercentage');
   }
 
   Future<void> _showDialogImage(bool winner) {
