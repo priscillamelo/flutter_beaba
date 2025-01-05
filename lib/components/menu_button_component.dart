@@ -11,11 +11,13 @@ class MenuButtonComponent {
     return ClipPath(
       clipper: clipper,
       child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: color, // Cor do botão
-          shape: RoundedRectangleBorder(
-              borderRadius:
-                  BorderRadius.circular(0)), // Remove bordas arredondadas
+        style: ButtonStyle(
+          side: WidgetStatePropertyAll(BorderSide(
+              color: Colors.white38, style: BorderStyle.solid, width: 3)),
+          backgroundColor: WidgetStatePropertyAll(color),
+          shape: WidgetStatePropertyAll(
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+          ),
         ),
         onPressed: () {
           Navigator.pushNamed(context, routes);
