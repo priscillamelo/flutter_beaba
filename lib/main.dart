@@ -41,10 +41,12 @@ class MyApp extends StatelessWidget {
       ),
       home: Scaffold(
           appBar: AppBar(
+            toolbarHeight: 70,
+            backgroundColor: Colors.lightBlue.shade100,
             centerTitle: true,
             title: Image.asset(
               'assets/images/logo.png',
-              height: 80,
+              height: 60,
             ),
           ),
           body: const MenuScreen()),

@@ -21,6 +21,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/alphabet_libras/
+    - assets/images/backgrounds/
     - assets/gifs/
     - assets/gifs/menu/
   fonts:
