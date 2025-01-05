@@ -9,29 +9,14 @@ class MenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Hora de Aprender!',
-          style: TextStyle(
-            fontSize: 35,
-            fontFamily: 'DynaPuff',
-            fontWeight: FontWeight.bold,
-            letterSpacing: 2,
-            foreground: Paint()
-              ..shader = const LinearGradient(
-                colors: [
-                  Color.fromARGB(255, 255, 59, 180),
-                  Color.fromARGB(255, 255, 184, 77),
-                  Color.fromARGB(255, 43, 177, 255),
-                  Color.fromARGB(255, 116, 57, 255),
-                ],
-              ).createShader(
-                const Rect.fromLTWH(30, 300, 400, 500),
-              ),
-          ),
+      body: Stack(children: [
+        Image.asset(
+          'assets/images/backgrounds/menu-background.jpg',
+          fit: BoxFit.fill,
+          height: MediaQuery.of(context).size.height,
         ),
-      ),
-      body: const MenuWidget(),
+        MenuWidget()
+      ]),
     );
   }
 }
@@ -51,50 +36,114 @@ class _MenuWidgetState extends State<MenuWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      crossAxisCount: 2,
-      mainAxisSpacing: 16,
-      crossAxisSpacing: 16,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      children: [
-        MenuButtonComponent.buildCustomButton(
-            context: context,
-            routes: ScreenRoutes.kAbcDrawingScreen,
-            gif: Image.asset('assets/gifs/menu/menu-abc.gif'),
-            clipper: OctagonClipper(),
-            color: Colors.pink.shade100),
-        MenuButtonComponent.buildCustomButton(
-            context: context,
-            routes: ScreenRoutes.kNumbersDrawingScreen,
-            gif: Image.asset('assets/gifs/menu/menu-numbers.gif'),
-            clipper: HexagonClipper(),
-            color: Colors.blue.shade100),
-        MenuButtonComponent.buildCustomButton(
-            context: context,
-            routes: ScreenRoutes.kShapesScreen,
-            gif: Image.asset('assets/gifs/menu/menu-shapes.gif'),
-            clipper: DiamondClipper(),
-            color: Colors.green.shade100),
-        MenuButtonComponent.buildCustomButton(
-            context: context,
-            routes: ScreenRoutes.kRecognizeColorsScreen,
-            gif: Image.asset('assets/gifs/menu/menu-recognize-colors.gif'),
-            clipper: PentagonClipper(),
-            color: Colors.deepOrange.shade200),
-        MenuButtonComponent.buildCustomButton(
-            context: context,
-            routes: ScreenRoutes.kColorMatchingScreen,
-            gif: Image.asset('assets/gifs/menu/menu-colors-matching.gif'),
-            clipper: SquareClipper(),
-            color: Colors.purple.shade100),
-        MenuButtonComponent.buildCustomButton(
-            context: context,
-            routes: ScreenRoutes.kIdentifyAlphabetLibras,
-            gif: Image.asset(
-                'assets/gifs/menu/menu-identify-alphabet-libras.gif'),
-            clipper: OvalClipper(),
-            color: Colors.amber.shade100),
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(top: 16.0),
+      child: Column(
+        children: [
+          Text(
+            'Hora de Aprender!',
+            style: TextStyle(
+              fontSize: 35,
+              fontFamily: 'DynaPuff',
+              fontWeight: FontWeight.bold,
+              letterSpacing: 2,
+              foreground: Paint()
+                ..shader = const LinearGradient(
+                  colors: [
+                    Color.fromARGB(255, 255, 59, 180),
+                    Color.fromARGB(255, 255, 184, 77),
+                    Color.fromARGB(255, 43, 177, 255),
+                    Color.fromARGB(255, 116, 57, 255),
+                  ],
+                ).createShader(
+                  const Rect.fromLTWH(30, 300, 400, 500),
+                ),
+              shadows: [
+                Shadow(
+                  offset: Offset(0, 0),
+                  blurRadius: 10,
+                  color:
+                      Colors.white.withValues(alpha: 0.7), // Efeito de brilho
+                ),
+                Shadow(
+                  offset: Offset(0, 3),
+                  blurRadius: 10,
+                  color: Colors.blue
+                      .withValues(alpha: 0.6), // Brilho adicional em azul
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            // Use Expanded para que o GridView ocupe o restante do espaço disponível
+            child: GridView.count(
+              crossAxisCount: 2,
+              mainAxisSpacing: 16,
+              crossAxisSpacing: 16,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              children: [
+                MenuButtonComponent.buildCustomButton(
+                    context: context,
+                    routes: ScreenRoutes.kAbcDrawingScreen,
+                    gif: Image.asset('assets/gifs/menu/menu-abc.gif'),
+                    clipper: SquareClipper(),
+                    color: Colors.pink.shade100),
+                MenuButtonComponent.buildCustomButton(
+                    context: context,
+                    routes: ScreenRoutes.kNumbersDrawingScreen,
+                    gif: Image.asset('assets/gifs/menu/menu-numbers.gif'),
+                    clipper: SquareClipper(),
+                    color: Colors.blue.shade100),
+                MenuButtonComponent.buildCustomButton(
+                    context: context,
+                    routes: ScreenRoutes.kShapesScreen,
+                    gif: Image.asset('assets/gifs/menu/menu-shapes.gif'),
+                    clipper: SquareClipper(),
+                    color: Colors.green.shade100),
+                MenuButtonComponent.buildCustomButton(
+                    context: context,
+                    routes: ScreenRoutes.kRecognizeColorsScreen,
+                    gif: Image.asset(
+                        'assets/gifs/menu/menu-recognize-colors.gif'),
+                    clipper: SquareClipper(),
+                    color: Colors.deepOrange.shade200),
+                MenuButtonComponent.buildCustomButton(
+                    context: context,
+                    routes: ScreenRoutes.kColorMatchingScreen,
+                    gif: Image.asset(
+                        'assets/gifs/menu/menu-colors-matching.gif'),
+                    clipper: SquareClipper(),
+                    color: Colors.purple.shade100),
+                MenuButtonComponent.buildCustomButton(
+                    context: context,
+                    routes: ScreenRoutes.kIdentifyAlphabetLibras,
+                    gif: Image.asset(
+                        'assets/gifs/menu/menu-identify-alphabet-libras.gif'),
+                    clipper: SquareClipper(),
+                    color: Colors.amber.shade100),
+                MenuButtonComponent.buildCustomButton(
+                    context: context,
+                    routes: ScreenRoutes.kShapesScreen,
+                    gif: Image.asset('assets/gifs/menu/menu-shapes.gif'),
+                    clipper: SquareClipper(),
+                    color: Colors.green.shade100),
+                MenuButtonComponent.buildCustomButton(
+                    context: context,
+                    routes: ScreenRoutes.kShapesScreen,
+                    gif: Image.asset('assets/gifs/menu/menu-shapes.gif'),
+                    clipper: SquareClipper(),
+                    color: Colors.green.shade100),
+                MenuButtonComponent.buildCustomButton(
+                    context: context,
+                    routes: ScreenRoutes.kShapesScreen,
+                    gif: Image.asset('assets/gifs/menu/menu-shapes.gif'),
+                    clipper: SquareClipper(),
+                    color: Colors.green.shade100),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
