@@ -1,14 +1,14 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 
-class NumeroPorExtenso extends StatefulWidget {
-  const NumeroPorExtenso({super.key});
+class ReconhecerNumeroPorExtenso extends StatefulWidget {
+  const ReconhecerNumeroPorExtenso({super.key});
   @override
   // ignore: library_private_types_in_public_api
-  _NumeroPorExtensoState createState() => _NumeroPorExtensoState();
+  _ReconhecerNumeroPorExtensoState createState() => _ReconhecerNumeroPorExtensoState();
 }
 
-class _NumeroPorExtensoState extends State<NumeroPorExtenso> {
+class _ReconhecerNumeroPorExtensoState extends State<ReconhecerNumeroPorExtenso> {
   final Map<int, String> numerosPorExtenso = {
     0: 'zero',
     1: 'um',

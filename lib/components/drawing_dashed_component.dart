@@ -25,11 +25,11 @@ class DrawingDashedComponent extends CustomPainter {
     final offset = letter != null
         ? Offset(
             (size.width - textPainter.width) / 1.8,
-            (size.height - textPainter.height) / 6,
+            (size.height - textPainter.height) / 3,
           )
         : Offset(
             (size.width - textPainter.width) / 1.9,
-            (size.height - textPainter.height) / 4,
+            (size.height - textPainter.height) / 2,
           );
 
     textPainter.paint(canvas, offset);

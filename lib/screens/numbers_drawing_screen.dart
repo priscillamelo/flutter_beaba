@@ -112,8 +112,12 @@ class _NumbersDrawingScreenState extends State<NumbersDrawingScreen> {
                   ],
                 ),
               ),
-              /* ElevatedButton(
+              ElevatedButton(
                   style: const ButtonStyle(
+                    side: WidgetStatePropertyAll(BorderSide(
+                      width: 2,
+                      color: Colors.black,
+                    )),
                     padding: WidgetStatePropertyAll<EdgeInsets>(
                       EdgeInsets.symmetric(vertical: 20, horizontal: 30),
                     ),
@@ -146,12 +150,21 @@ class _NumbersDrawingScreenState extends State<NumbersDrawingScreen> {
                   },
                   child: Text(
                     'Próximo Número',
-                    style: Theme.of(context).textTheme.displayMedium,
+                    style: TextStyle(
+                      fontSize: 32,
+                      foreground: Paint()
+                        ..shader = const LinearGradient(
+                          colors: [
+                            ui.Color.fromARGB(255, 255, 3, 158),
+                            ui.Color.fromARGB(255, 255, 153, 0),
+                            ui.Color.fromARGB(255, 0, 162, 255),
+                            ui.Color.fromARGB(255, 76, 0, 255),
+                          ],
+                        ).createShader(
+                          const Rect.fromLTWH(30, 300, 400, 500),
+                        ),
+                    ),
                   )),
-              ElevatedButton(
-                onPressed: _resetGame,
-                child: const Text('Reiniciar Jogo'),
-              ), */
             ],
           ),
         );
