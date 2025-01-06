@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_beaba/routes/screen_routes.dart';
 import 'package:flutter_beaba/screens/abc_drawing_screen.dart';
 import 'package:flutter_beaba/screens/colors_screen.dart';
+import 'package:flutter_beaba/screens/curiosidades.dart';
 import 'package:flutter_beaba/screens/drawing_screen_shapes.dart';
 import 'package:flutter_beaba/screens/identify_alphabet_libras.dart';
 import 'package:flutter_beaba/screens/menu_screen.dart';
@@ -66,6 +67,8 @@ class MyApp extends StatelessWidget {
             RecognizeColorsScreen(),
         ScreenRoutes.kColorMatchingScreen: (context) =>
             const TelaCombinacaoCores(),
+        ScreenRoutes.kCuriosidadesScreen: (context) =>
+            const CuriosidadesScreen(),
         ScreenRoutes.kIdentifyAlphabetLibras: (context) =>
             IdentifyAlphabetLibras(),
       },

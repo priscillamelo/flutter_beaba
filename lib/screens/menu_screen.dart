@@ -127,18 +127,12 @@ class _MenuWidgetState extends State<MenuWidget> {
                     gif: Image.asset('assets/gifs/menu/menu-shapes.gif'),
                     clipper: SquareClipper(),
                     color: Colors.green.shade100),
-                /*    MenuButtonComponent.buildCustomButton(
+                MenuButtonComponent.buildCustomButton(
                     context: context,
-                    routes: ScreenRoutes.kShapesScreen,
+                    routes: ScreenRoutes.kCuriosidadesScreen,
                     gif: Image.asset('assets/gifs/menu/menu-shapes.gif'),
                     clipper: SquareClipper(),
                     color: Colors.green.shade100),
-                MenuButtonComponent.buildCustomButton(
-                    context: context,
-                    routes: ScreenRoutes.kShapesScreen,
-                    gif: Image.asset('assets/gifs/menu/menu-shapes.gif'),
-                    clipper: SquareClipper(),
-                    color: Colors.green.shade100), */
               ],
             ),
           ),
