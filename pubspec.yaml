@@ -10,6 +10,8 @@ dependencies:
   flutter:
     sdk: flutter
   image: ^4.5.0
+  google_fonts: ^6.2.1
+  circular_countdown_timer: ^0.2.4
 
 dev_dependencies:
   flutter_test:
@@ -22,6 +24,10 @@ flutter:
     - assets/images/
     - assets/images/alphabet_libras/
     - assets/images/backgrounds/
+    - assets/images/formas1/
+    - assets/images/formas2/
+    - assets/images/letras_ma/
+    - assets/images/letras_mi/
     - assets/gifs/
     - assets/gifs/menu/
   fonts:
