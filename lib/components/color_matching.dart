@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_beaba/models/colors.dart';
+import 'package:flutter/material.dart';
 
 class ColorMatching extends StatefulWidget {
   const ColorMatching({super.key});
@@ -26,9 +26,11 @@ class _ColorMatchingState extends State<ColorMatching> {
             children: [
               Column(
                 children: [
-                  CircleAvatar(
-                    maxRadius: 75,
-                    backgroundColor: vermelho,
+                  Image.asset(
+                    'assets/images/splash-sem-fundo.png',
+                    height: 150,
+                    width: 150,
+                    color: vermelho,
                   ),
                   const SizedBox(
                     height: 3,
@@ -45,9 +47,11 @@ class _ColorMatchingState extends State<ColorMatching> {
               ),
               Column(
                 children: [
-                  CircleAvatar(
-                    maxRadius: 75,
-                    backgroundColor: amarelo,
+                  Image.asset(
+                    'assets/images/splash-sem-fundo.png',
+                    height: 150,
+                    width: 150,
+                    color: amarelo,
                   ),
                   const SizedBox(
                     height: 3,
@@ -66,21 +70,26 @@ class _ColorMatchingState extends State<ColorMatching> {
           ),
           Column(
             children: [
-              ElevatedButton(
+              IconButton(
                 onPressed: () {
                   setState(() {
                     isSelected = true;
                   });
                 },
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  backgroundColor: isSelected ? laranja : cinza,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  minimumSize: const Size(150, 150),
+                icon: Image.asset(
+                  'assets/images/splash-sem-fundo.png',
+                  height: 150,
+                  width: 150,
+                  color: isSelected ? laranja : cinza,
                 ),
-                child: const Text(''),
+                style: IconButton.styleFrom(
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  enableFeedback: false,
+                  splashFactory: NoSplash.splashFactory,
+                  // padding: EdgeInsets.zero,
+                  animationDuration: Duration.zero,
+                ),
               ),
               Visibility(
                   visible: isSelected,
@@ -125,9 +134,11 @@ class _Combinacao2State extends State<Combinacao2> {
             children: [
               Column(
                 children: [
-                  CircleAvatar(
-                    maxRadius: 75,
-                    backgroundColor: azul,
+                  Image.asset(
+                    'assets/images/splash-sem-fundo.png',
+                    height: 150,
+                    width: 150,
+                    color: azul,
                   ),
                   const SizedBox(
                     height: 3,
@@ -144,9 +155,11 @@ class _Combinacao2State extends State<Combinacao2> {
               ),
               Column(
                 children: [
-                  CircleAvatar(
-                    maxRadius: 75,
-                    backgroundColor: amarelo,
+                  Image.asset(
+                    'assets/images/splash-sem-fundo.png',
+                    height: 150,
+                    width: 150,
+                    color: amarelo,
                   ),
                   const SizedBox(
                     height: 3,
@@ -165,21 +178,26 @@ class _Combinacao2State extends State<Combinacao2> {
           ),
           Column(
             children: [
-              ElevatedButton(
+              IconButton(
                 onPressed: () {
                   setState(() {
                     isSelected = true;
                   });
                 },
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  backgroundColor: isSelected ? verde : cinza,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  minimumSize: const Size(150, 150),
+                icon: Image.asset(
+                  'assets/images/splash-sem-fundo.png',
+                  height: 150,
+                  width: 150,
+                  color: isSelected ? verde : cinza,
                 ),
-                child: const Text(''),
+                style: IconButton.styleFrom(
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  enableFeedback: false,
+                  splashFactory: NoSplash.splashFactory,
+                  // padding: EdgeInsets.zero,
+                  animationDuration: Duration.zero,
+                ),
               ),
               Visibility(
                   visible: isSelected,
@@ -224,9 +242,11 @@ class _Combinacao3State extends State<Combinacao3> {
             children: [
               Column(
                 children: [
-                  CircleAvatar(
-                    maxRadius: 75,
-                    backgroundColor: azul,
+                  Image.asset(
+                    'assets/images/splash-sem-fundo.png',
+                    height: 150,
+                    width: 150,
+                    color: azul,
                   ),
                   const SizedBox(
                     height: 3,
@@ -243,9 +263,11 @@ class _Combinacao3State extends State<Combinacao3> {
               ),
               Column(
                 children: [
-                  CircleAvatar(
-                    maxRadius: 75,
-                    backgroundColor: vermelho,
+                  Image.asset(
+                    'assets/images/splash-sem-fundo.png',
+                    height: 150,
+                    width: 150,
+                    color: vermelho,
                   ),
                   const SizedBox(
                     height: 3,
@@ -264,21 +286,26 @@ class _Combinacao3State extends State<Combinacao3> {
           ),
           Column(
             children: [
-              ElevatedButton(
+              IconButton(
                 onPressed: () {
                   setState(() {
                     isSelected = true;
                   });
                 },
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  backgroundColor: isSelected ? violeta : cinza,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  minimumSize: const Size(150, 150),
+                icon: Image.asset(
+                  'assets/images/splash-sem-fundo.png',
+                  height: 150,
+                  width: 150,
+                  color: isSelected ? violeta : cinza,
                 ),
-                child: const Text(''),
+                style: IconButton.styleFrom(
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  enableFeedback: false,
+                  splashFactory: NoSplash.splashFactory,
+                  // padding: EdgeInsets.zero,
+                  animationDuration: Duration.zero,
+                ),
               ),
               Visibility(
                   visible: isSelected,
@@ -323,9 +350,11 @@ class _Combinacao4State extends State<Combinacao4> {
             children: [
               Column(
                 children: [
-                  CircleAvatar(
-                    maxRadius: 75,
-                    backgroundColor: verde,
+                  Image.asset(
+                    'assets/images/splash-sem-fundo.png',
+                    height: 150,
+                    width: 150,
+                    color: verde,
                   ),
                   const SizedBox(
                     height: 3,
@@ -342,9 +371,11 @@ class _Combinacao4State extends State<Combinacao4> {
               ),
               Column(
                 children: [
-                  CircleAvatar(
-                    maxRadius: 75,
-                    backgroundColor: amarelo,
+                  Image.asset(
+                    'assets/images/splash-sem-fundo.png',
+                    height: 150,
+                    width: 150,
+                    color: amarelo,
                   ),
                   const SizedBox(
                     height: 3,
@@ -363,21 +394,26 @@ class _Combinacao4State extends State<Combinacao4> {
           ),
           Column(
             children: [
-              ElevatedButton(
+              IconButton(
                 onPressed: () {
                   setState(() {
                     isSelected = true;
                   });
                 },
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  backgroundColor: isSelected ? verdeAmarelo : cinza,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  minimumSize: const Size(150, 150),
+                icon: Image.asset(
+                  'assets/images/splash-sem-fundo.png',
+                  height: 150,
+                  width: 150,
+                  color: isSelected ? verdeAmarelo : cinza,
                 ),
-                child: const Text(''),
+                style: IconButton.styleFrom(
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  enableFeedback: false,
+                  splashFactory: NoSplash.splashFactory,
+                  // padding: EdgeInsets.zero,
+                  animationDuration: Duration.zero,
+                ),
               ),
               Visibility(
                   visible: isSelected,
@@ -422,9 +458,11 @@ class _Combinacao5State extends State<Combinacao5> {
             children: [
               Column(
                 children: [
-                  CircleAvatar(
-                    maxRadius: 75,
-                    backgroundColor: verde,
+                  Image.asset(
+                    'assets/images/splash-sem-fundo.png',
+                    height: 150,
+                    width: 150,
+                    color: verde,
                   ),
                   const SizedBox(
                     height: 3,
@@ -441,9 +479,11 @@ class _Combinacao5State extends State<Combinacao5> {
               ),
               Column(
                 children: [
-                  CircleAvatar(
-                    maxRadius: 75,
-                    backgroundColor: azul,
+                  Image.asset(
+                    'assets/images/splash-sem-fundo.png',
+                    height: 150,
+                    width: 150,
+                    color: azul,
                   ),
                   const SizedBox(
                     height: 3,
@@ -462,21 +502,26 @@ class _Combinacao5State extends State<Combinacao5> {
           ),
           Column(
             children: [
-              ElevatedButton(
+              IconButton(
                 onPressed: () {
                   setState(() {
                     isSelected = true;
                   });
                 },
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  backgroundColor: isSelected ? verdeAzul : cinza,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  minimumSize: const Size(150, 150),
+                icon: Image.asset(
+                  'assets/images/splash-sem-fundo.png',
+                  height: 150,
+                  width: 150,
+                  color: isSelected ? verdeAzul : cinza,
                 ),
-                child: const Text(''),
+                style: IconButton.styleFrom(
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  enableFeedback: false,
+                  splashFactory: NoSplash.splashFactory,
+                  // padding: EdgeInsets.zero,
+                  animationDuration: Duration.zero,
+                ),
               ),
               Visibility(
                   visible: isSelected,
@@ -521,9 +566,11 @@ class _Combinacao6State extends State<Combinacao6> {
             children: [
               Column(
                 children: [
-                  CircleAvatar(
-                    maxRadius: 75,
-                    backgroundColor: violeta,
+                  Image.asset(
+                    'assets/images/splash-sem-fundo.png',
+                    height: 150,
+                    width: 150,
+                    color: violeta,
                   ),
                   const SizedBox(
                     height: 3,
@@ -540,9 +587,11 @@ class _Combinacao6State extends State<Combinacao6> {
               ),
               Column(
                 children: [
-                  CircleAvatar(
-                    maxRadius: 75,
-                    backgroundColor: azul,
+                  Image.asset(
+                    'assets/images/splash-sem-fundo.png',
+                    height: 150,
+                    width: 150,
+                    color: azul,
                   ),
                   const SizedBox(
                     height: 3,
@@ -561,21 +610,26 @@ class _Combinacao6State extends State<Combinacao6> {
           ),
           Column(
             children: [
-              ElevatedButton(
+              IconButton(
                 onPressed: () {
                   setState(() {
                     isSelected = true;
                   });
                 },
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  backgroundColor: isSelected ? roxoAzul : cinza,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  minimumSize: const Size(150, 150),
+                icon: Image.asset(
+                  'assets/images/splash-sem-fundo.png',
+                  height: 150,
+                  width: 150,
+                  color: isSelected ? roxoAzul : cinza,
                 ),
-                child: const Text(''),
+                style: IconButton.styleFrom(
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  enableFeedback: false,
+                  splashFactory: NoSplash.splashFactory,
+                  // padding: EdgeInsets.zero,
+                  animationDuration: Duration.zero,
+                ),
               ),
               Visibility(
                   visible: isSelected,
@@ -620,9 +674,11 @@ class _Combinacao7State extends State<Combinacao7> {
             children: [
               Column(
                 children: [
-                  CircleAvatar(
-                    maxRadius: 75,
-                    backgroundColor: violeta,
+                  Image.asset(
+                    'assets/images/splash-sem-fundo.png',
+                    height: 150,
+                    width: 150,
+                    color: violeta,
                   ),
                   const SizedBox(
                     height: 3,
@@ -639,9 +695,11 @@ class _Combinacao7State extends State<Combinacao7> {
               ),
               Column(
                 children: [
-                  CircleAvatar(
-                    maxRadius: 75,
-                    backgroundColor: vermelho,
+                  Image.asset(
+                    'assets/images/splash-sem-fundo.png',
+                    height: 150,
+                    width: 150,
+                    color: vermelho,
                   ),
                   const SizedBox(
                     height: 3,
@@ -660,21 +718,26 @@ class _Combinacao7State extends State<Combinacao7> {
           ),
           Column(
             children: [
-              ElevatedButton(
+              IconButton(
                 onPressed: () {
                   setState(() {
                     isSelected = true;
                   });
                 },
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  backgroundColor: isSelected ? roxoVermelho : cinza,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  minimumSize: const Size(150, 150),
+                icon: Image.asset(
+                  'assets/images/splash-sem-fundo.png',
+                  height: 150,
+                  width: 150,
+                  color: isSelected ? roxoVermelho : cinza,
                 ),
-                child: const Text(''),
+                style: IconButton.styleFrom(
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  enableFeedback: false,
+                  splashFactory: NoSplash.splashFactory,
+                  // padding: EdgeInsets.zero,
+                  animationDuration: Duration.zero,
+                ),
               ),
               Visibility(
                   visible: isSelected,
@@ -719,9 +782,11 @@ class _Combinacao8State extends State<Combinacao8> {
             children: [
               Column(
                 children: [
-                  CircleAvatar(
-                    maxRadius: 75,
-                    backgroundColor: laranja,
+                  Image.asset(
+                    'assets/images/splash-sem-fundo.png',
+                    height: 150,
+                    width: 150,
+                    color: laranja,
                   ),
                   const SizedBox(
                     height: 3,
@@ -738,9 +803,11 @@ class _Combinacao8State extends State<Combinacao8> {
               ),
               Column(
                 children: [
-                  CircleAvatar(
-                    maxRadius: 75,
-                    backgroundColor: vermelho,
+                  Image.asset(
+                    'assets/images/splash-sem-fundo.png',
+                    height: 150,
+                    width: 150,
+                    color: vermelho,
                   ),
                   const SizedBox(
                     height: 3,
@@ -759,21 +826,26 @@ class _Combinacao8State extends State<Combinacao8> {
           ),
           Column(
             children: [
-              ElevatedButton(
+              IconButton(
                 onPressed: () {
                   setState(() {
                     isSelected = true;
                   });
                 },
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  backgroundColor: isSelected ? laranjaVermelho : cinza,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  minimumSize: const Size(150, 150),
+                icon: Image.asset(
+                  'assets/images/splash-sem-fundo.png',
+                  height: 150,
+                  width: 150,
+                  color: isSelected ? laranjaVermelho : cinza,
                 ),
-                child: const Text(''),
+                style: IconButton.styleFrom(
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  enableFeedback: false,
+                  splashFactory: NoSplash.splashFactory,
+                  // padding: EdgeInsets.zero,
+                  animationDuration: Duration.zero,
+                ),
               ),
               Visibility(
                   visible: isSelected,
@@ -818,9 +890,11 @@ class _Combinacao9State extends State<Combinacao9> {
             children: [
               Column(
                 children: [
-                  CircleAvatar(
-                    maxRadius: 75,
-                    backgroundColor: laranja,
+                  Image.asset(
+                    'assets/images/splash-sem-fundo.png',
+                    height: 150,
+                    width: 150,
+                    color: laranja,
                   ),
                   const SizedBox(
                     height: 3,
@@ -837,9 +911,11 @@ class _Combinacao9State extends State<Combinacao9> {
               ),
               Column(
                 children: [
-                  CircleAvatar(
-                    maxRadius: 75,
-                    backgroundColor: amarelo,
+                  Image.asset(
+                    'assets/images/splash-sem-fundo.png',
+                    height: 150,
+                    width: 150,
+                    color: amarelo,
                   ),
                   const SizedBox(
                     height: 3,
@@ -858,21 +934,26 @@ class _Combinacao9State extends State<Combinacao9> {
           ),
           Column(
             children: [
-              ElevatedButton(
+              IconButton(
                 onPressed: () {
                   setState(() {
                     isSelected = true;
                   });
                 },
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  backgroundColor: isSelected ? laranjaAmarelo : cinza,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  minimumSize: const Size(150, 150),
+                icon: Image.asset(
+                  'assets/images/splash-sem-fundo.png',
+                  height: 150,
+                  width: 150,
+                  color: isSelected ? laranjaAmarelo : cinza,
                 ),
-                child: const Text(''),
+                style: IconButton.styleFrom(
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  enableFeedback: false,
+                  splashFactory: NoSplash.splashFactory,
+                  // padding: EdgeInsets.zero,
+                  animationDuration: Duration.zero,
+                ),
               ),
               Visibility(
                   visible: isSelected,

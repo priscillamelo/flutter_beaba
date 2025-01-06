@@ -8,6 +8,7 @@ import 'package:flutter_beaba/screens/numbers_screen.dart';
 
 void main() {
   runApp(const MyApp());
+  // runApp(NumeroPorExtenso());
 }
 
 class MyApp extends StatelessWidget {

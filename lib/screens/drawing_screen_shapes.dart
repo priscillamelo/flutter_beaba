@@ -1,13 +1,11 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-import 'package:image/image.dart' as img;
-import 'package:flutter/rendering.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_beaba/components/dashed_shapes_component.dart';
 import 'package:flutter_beaba/components/drawing_shape_user.dart';
 import 'package:flutter_beaba/components/widget_to_image.dart';
-
-///tela de desenhar formas
+import 'package:image/image.dart' as img;
+import 'package:flutter/rendering.dart';
+import 'package:flutter/material.dart';
 
 class DrawingScreen extends StatefulWidget {
   const DrawingScreen({super.key});
@@ -22,14 +20,12 @@ class _DrawingScreenState extends State<DrawingScreen> {
 
   List<Offset> pointsUser = [];
   ui.Image? letterImage;
-  // Pontos do traço tracejado
-  // List<Offset> dashedTrace = [
-  //   Offset(10, 20),
-  //   Offset(30, 40),
-  // ];
 
   late GlobalKey globalKeyTrace;
   late GlobalKey globalKeyUser;
+
+  int currentShapeIndex = 2;
+  final List<String> shapes = ['circulo', 'triangulo', 'quadrado', 'pentagono'];
 
   @override
   void initState() {
@@ -43,74 +39,93 @@ class _DrawingScreenState extends State<DrawingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Desenhe a Forma'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.delete),
-            onPressed: () => setState(() => pointsUser.clear()),
-          ),
-          IconButton(
-            icon: const Icon(Icons.check),
-            onPressed: () async {
-              Uint8List imageTrace = await _captureImageLetterTrace();
-              Uint8List imageUser = await _captureImageLetterUser();
-              setState(() {
-                _compareImages(imageTrace, imageUser);
-              });
-            },
-          ),
-        ],
+        title: Text(
+          'Formas',
+          style: Theme.of(context).textTheme.headlineMedium,
+        ),
       ),
       body: LayoutBuilder(builder: (context, constraints) {
-        return Stack(children: [
-          // Letra Tracejada
-          WidgetToImage(onImageBuilder: (key) {
-            globalKeyTrace = key;
-            return Center(
-              child: CustomPaint(
-                key: _paintKey, // Adiciona o GlobalKey
-                size: const Size(300, 300), // Tamanho fixo do CustomPaint
-                painter: DashedShapeComponent(shapes: "triangulo"),
-              ),
-            );
-          }),
-          Center(
-            child: imageBackground,
-          ),
-          // Área de Desenho (GestureDetector cobrindo tudo)
-          WidgetToImage(onImageBuilder: (key) {
-            globalKeyUser = key;
-            return GestureDetector(
-              onPanUpdate: (details) {
-                setState(() {
-                  // Obtemos o RenderBox associado ao CustomPaint
-                  final RenderBox renderBox =
-                      _paintKey.currentContext!.findRenderObject() as RenderBox;
-
-                  // Convertendo o toque global para local
-                  final Offset localOffset =
-                      renderBox.globalToLocal(details.globalPosition);
-
-                  pointsUser.add(localOffset);
-                });
-              },
-              onPanEnd: (details) {
-                pointsUser.add(
-                    Offset.zero); // Adiciona ponto zero para segmentar linhas
-              },
-              child: Center(
-                child: CustomPaint(
-                  size: const Size(300, 300), // Mesmo tamanho do CustomPaint
-                  painter: DrawingShapeUser(
-                    points: pointsUser,
-                    color: Colors.blue,
-                    strokeWidth: 10.0,
-                  ),
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Text(
+              'Vamos desenhas as formas!',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            Center(
+              child: Stack(children: [
+                // Exibe a forma tracejada que a criança deve desenhar
+                WidgetToImage(onImageBuilder: (key) {
+                  globalKeyTrace = key;
+                  return Center(
+                    child: CustomPaint(
+                      key: _paintKey, // Adiciona o GlobalKey
+                      size: const Size(400, 400), // Tamanho fixo do CustomPaint
+                      painter: DashedShapeComponent(
+                          shape: shapes[currentShapeIndex]),
+                    ),
+                  );
+                }),
+                Center(
+                  child: imageBackground,
                 ),
-              ),
-            );
-          })
-        ]);
+
+                // Área de Desenho (GestureDetector cobrindo tudo)
+                WidgetToImage(onImageBuilder: (key) {
+                  globalKeyUser = key;
+                  return GestureDetector(
+                    onPanUpdate: (details) {
+                      setState(() {
+                        final RenderBox renderBox = _paintKey.currentContext!
+                            .findRenderObject() as RenderBox;
+
+                        // Convertendo o toque global para local
+                        final Offset localOffset =
+                            renderBox.globalToLocal(details.globalPosition);
+
+                        pointsUser.add(localOffset);
+                      });
+                    },
+                    onPanEnd: (details) {
+                      pointsUser.add(Offset
+                          .zero); // Adiciona ponto zero para segmentar linhas
+                    },
+                    child: Center(
+                      child: CustomPaint(
+                        size: const Size(
+                            400, 400), // Mesmo tamanho do CustomPaint
+                        painter: DrawingShapeUser(
+                          points: pointsUser,
+                          color: Colors.blue,
+                          strokeWidth: 10.0,
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+              ]),
+            ),
+            ElevatedButton(
+                style: const ButtonStyle(
+                    padding: WidgetStatePropertyAll<EdgeInsets>(
+                        EdgeInsets.symmetric(vertical: 20, horizontal: 30))),
+                onPressed: () async {
+                  Uint8List imageTrace = await _captureImageLetterTrace();
+                  Uint8List imageUser = await _captureImageLetterUser();
+                  setState(() {
+                    _compareImages(imageTrace, imageUser);
+                  });
+                },
+                child: Text(
+                  'Proxima Forma',
+                  style: Theme.of(context).textTheme.displayMedium,
+                )),
+            ElevatedButton(
+              onPressed: _resetGame,
+              child: const Text('Reiniciar jogo'),
+            )
+          ],
+        );
       }),
     );
   }
@@ -176,16 +191,20 @@ class _DrawingScreenState extends State<DrawingScreen> {
 
     // Calcula a porcentagem de cobertura
     final newCoveragePercentage = (coveredPixels / totalPixels1) * 100;
-    bool winner = true;
-    if (newCoveragePercentage > 60) {
-      _showDialogImage(winner);
-    } else {
-      _showDialogImage(!winner);
+    bool winner = newCoveragePercentage > 40;
+
+    if (winner == true) {
+      if (currentShapeIndex < shapes.length - 1) {
+        setState(() {
+          currentShapeIndex++;
+
+          pointsUser.clear(); // Limpa o desenho
+        });
+      } else {
+        _resetGame(); // Reinicia ao completar o alfabeto
+      }
     }
-    debugPrint('Total Pixels da letra: $totalPixels1');
-    debugPrint('Total Pixels da letra: $totalPixels2');
-    debugPrint('Pixels cobertos: $coveredPixels');
-    debugPrint('Percentual: $newCoveragePercentage');
+    _showDialogImage(winner);
   }
 
   Future<void> _showDialogImage(bool winner) {
@@ -203,11 +222,21 @@ class _DrawingScreenState extends State<DrawingScreen> {
               TextButton(
                 child: const Text('Ok'),
                 onPressed: () {
+                  setState(() {
+                    pointsUser.clear();
+                  });
                   Navigator.of(context).pop();
                 },
               ),
             ],
           );
         });
+  }
+
+  void _resetGame() {
+    setState(() {
+      currentShapeIndex = 0;
+      pointsUser.clear();
+    });
   }
 }

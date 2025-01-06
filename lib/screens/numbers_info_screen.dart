@@ -19,15 +19,26 @@ class _NumeroPorExtensoState extends State<NumeroPorExtenso> {
     6: 'seis',
     7: 'sete',
     8: 'oito',
-    9: 'nove'
+    9: 'nove',
+    10: 'dez',
+    11: 'onze',
+    12: 'doze',
+    13: 'treze',
+    14: 'catorze',
+    15: 'quinze',
+    16: 'dezesseis',
+    17: 'dezessete',
+    18: 'dezoito',
+    19: 'dezenove',
+    20: 'vinte',
   };
+
   int numeroAleatorio = 0;
   String respostaUsuario = '';
 
   void gerarNovoNumero() {
     setState(() {
-      numeroAleatorio =
-          Random().nextInt(10); // Gera um número aleatório de 0 a 9
+      numeroAleatorio = Random().nextInt(20);
     });
   }
 
@@ -81,28 +92,34 @@ class _NumeroPorExtensoState extends State<NumeroPorExtenso> {
       appBar: AppBar(
         title: const Text('Identifique os números'),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Imagem do número
-              Image.asset(
-                  'assets/images/$numeroAleatorio.png'), // Substitua por seus arquivos de imagem
-              const SizedBox(height: 20),
-              TextField(
-                onChanged: (value) => respostaUsuario = value,
-                decoration: const InputDecoration(
-                  hintText: 'Digite o número por extenso',
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  '$numeroAleatorio',
+                  style: TextStyle(
+                    fontSize: 70,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: validarResposta,
-                child: const Text('Verificar'),
-              ),
-            ],
+                const SizedBox(height: 50),
+                TextField(
+                  onChanged: (value) => respostaUsuario = value,
+                  decoration: const InputDecoration(
+                    hintText: 'Digite o número por extenso',
+                  ),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: validarResposta,
+                  child: const Text('Verificar'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
