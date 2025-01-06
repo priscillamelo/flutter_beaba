@@ -10,6 +10,10 @@ dependencies:
   flutter:
     sdk: flutter
   image: ^4.5.0
+  google_fonts: ^6.2.1
+  circular_countdown_timer: ^0.2.4
+  youtube_player_flutter: ^9.1.1
+  animated_text_kit: ^4.2.2
 
 dev_dependencies:
   flutter_test:
@@ -20,7 +24,15 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
-    - assets/images/menu/
+    - assets/images/alphabet_libras/
+    - assets/images/backgrounds/
+    - assets/images/formas1/
+    - assets/images/formas2/
+    - assets/images/letras_ma/
+    - assets/images/letras_mi/
+    - assets/images/numeros/
+    - assets/gifs/
+    - assets/gifs/menu/
   fonts:
     - family: DynaPuff
       fonts:
@@ -28,3 +40,6 @@ flutter:
         - asset: assets\fonts\DynaPuff-Medium.ttf
         - asset: assets\fonts\DynaPuff-SemiBold.ttf
         - asset: assets\fonts\DynaPuff-Bold.ttf
+    - family: NationalFirstFontDotted
+      fonts:
+        - asset: assets\fonts\NationalFirstFontDotted-ldjD.ttf

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_beaba/components/menu_button_component.dart';
+import 'package:flutter_beaba/models/shapes_buttons_menu.dart';
 import 'package:flutter_beaba/routes/screen_routes.dart';
 
 class MenuScreen extends StatelessWidget {
@@ -7,101 +9,135 @@ class MenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Hora de Aprender!',
-          style: TextStyle(
-            fontSize: 35,
-            fontFamily: 'DynaPuff',
-            fontWeight: FontWeight.bold,
-            letterSpacing: 2,
-            foreground: Paint()
-              ..shader = const LinearGradient(
-                colors: [
-                  Color.fromARGB(255, 255, 59, 180),
-                  Color.fromARGB(255, 255, 184, 77),
-                  Color.fromARGB(255, 43, 177, 255),
-                  Color.fromARGB(255, 116, 57, 255),
-                ],
-              ).createShader(
-                const Rect.fromLTWH(30, 300, 400, 500),
-              ),
-          ),
+      body: Stack(children: [
+        Image.asset(
+          'assets/images/backgrounds/menu-background.jpg',
+          fit: BoxFit.fill,
+          height: MediaQuery.of(context).size.height,
         ),
-      ),
-      body: const MenuWidget(),
+        MenuWidget()
+      ]),
     );
   }
 }
 
-class MenuWidget extends StatelessWidget {
+class MenuWidget extends StatefulWidget {
   const MenuWidget({super.key});
 
   @override
+  State<MenuWidget> createState() => _MenuWidgetState();
+}
+
+class _MenuWidgetState extends State<MenuWidget> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      crossAxisCount: 2,
-      mainAxisSpacing: 24,
-      crossAxisSpacing: 32,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      children: [
-        ElevatedButton(
-          style: ButtonStyle(
-            backgroundColor: const WidgetStatePropertyAll<Color>(Colors.pink),
-            shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
-            )),
+    return Padding(
+      padding: const EdgeInsets.only(top: 16.0),
+      child: Column(
+        children: [
+          Text(
+            'Hora de Aprender!',
+            style: TextStyle(
+              fontSize: 35,
+              fontFamily: 'DynaPuff',
+              fontWeight: FontWeight.bold,
+              letterSpacing: 2,
+              foreground: Paint()
+                ..shader = const LinearGradient(
+                  colors: [
+                    Color.fromARGB(255, 255, 59, 180),
+                    Color.fromARGB(255, 255, 184, 77),
+                    Color.fromARGB(255, 43, 177, 255),
+                    Color.fromARGB(255, 116, 57, 255),
+                  ],
+                ).createShader(
+                  const Rect.fromLTWH(30, 300, 400, 500),
+                ),
+              shadows: [
+                Shadow(
+                  offset: Offset(0, 0),
+                  blurRadius: 10,
+                  color:
+                      Colors.white.withValues(alpha: 0.7), // Efeito de brilho
+                ),
+                Shadow(
+                  offset: Offset(0, 3),
+                  blurRadius: 10,
+                  color: Colors.blue
+                      .withValues(alpha: 0.6), // Brilho adicional em azul
+                ),
+              ],
+            ),
           ),
-          onPressed: () {
-            Navigator.pushNamed(context, ScreenRoutes.kAbcDrawingScreen);
-          },
-          child: Image.asset('assets/images/menu/menu_abc.png'),
-        ),
-        ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor: const WidgetStatePropertyAll<Color>(Colors.blue),
-              shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(60),
-              )),
+          Expanded(
+            // Use Expanded para que o GridView ocupe o restante do espaço disponível
+            child: GridView.count(
+              crossAxisCount: 2,
+              mainAxisSpacing: 16,
+              crossAxisSpacing: 16,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              children: [
+                MenuButtonComponent.buildCustomButton(
+                    context: context,
+                    routes: ScreenRoutes.kAbcDrawingScreen,
+                    gif: Image.asset('assets/gifs/menu/menu-abc.gif'),
+                    clipper: SquareClipper(),
+                    color: Colors.pink.shade100),
+                MenuButtonComponent.buildCustomButton(
+                    context: context,
+                    routes: ScreenRoutes.kNumbersDrawingScreen,
+                    gif: Image.asset('assets/gifs/menu/menu-numbers.gif'),
+                    clipper: SquareClipper(),
+                    color: Colors.blue.shade100),
+                MenuButtonComponent.buildCustomButton(
+                    context: context,
+                    routes: ScreenRoutes.kRecognizeShapesScreen,
+                    gif: Image.asset('assets/gifs/menu/menu-shapes.gif'),
+                    clipper: SquareClipper(),
+                    color: Colors.green.shade100),
+                MenuButtonComponent.buildCustomButton(
+                    context: context,
+                    routes: ScreenRoutes.kRecognizeColorsScreen,
+                    gif: Image.asset(
+                        'assets/gifs/menu/menu-recognize-colors.gif'),
+                    clipper: SquareClipper(),
+                    color: Colors.deepOrange.shade200),
+                MenuButtonComponent.buildCustomButton(
+                    context: context,
+                    routes: ScreenRoutes.kColorMatchingScreen,
+                    gif: Image.asset(
+                        'assets/gifs/menu/menu-colors-matching.gif'),
+                    clipper: SquareClipper(),
+                    color: Colors.purple.shade100),
+                MenuButtonComponent.buildCustomButton(
+                    context: context,
+                    routes: ScreenRoutes.kIdentifyAlphabetLibras,
+                    gif: Image.asset(
+                        'assets/gifs/menu/menu-identify-alphabet-libras.gif'),
+                    clipper: SquareClipper(),
+                    color: Colors.amber.shade100),
+                MenuButtonComponent.buildCustomButton(
+                    context: context,
+                    routes: ScreenRoutes.kRecognizeLettersScreen,
+                    gif: Image.asset('assets/gifs/menu/menu-shapes.gif'),
+                    clipper: SquareClipper(),
+                    color: Colors.green.shade100),
+                MenuButtonComponent.buildCustomButton(
+                    context: context,
+                    routes: ScreenRoutes.kCuriosidadesScreen,
+                    gif: Image.asset('assets/gifs/menu/menu-shapes.gif'),
+                    clipper: SquareClipper(),
+                    color: Colors.green.shade100),
+              ],
             ),
-            onPressed: () {
-              Navigator.pushNamed(context, ScreenRoutes.kNumbersDrawingScreen);
-            },
-            child: Image.asset('assets/images/menu/menu_numbers.png')),
-        ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor:
-                  const WidgetStatePropertyAll<Color>(Colors.purple),
-              shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100),
-              )),
-            ),
-            onPressed: () {
-              Navigator.pushNamed(context, ScreenRoutes.kColorMatchingScreen);
-            },
-            child: Image.asset('assets/images/menu/menu-colors.png')),
-        ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor: const WidgetStatePropertyAll<Color>(Colors.pink),
-              shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100),
-              )),
-            ),
-            onPressed: () {
-              Navigator.pushNamed(context, ScreenRoutes.kShapesScreen);
-            },
-            child: Image.asset('assets/images/menu/menu-shapes.png')),
-        ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor:
-                  const WidgetStatePropertyAll<Color>(Colors.amber),
-              shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100),
-              )),
-            ),
-            onPressed: () {},
-            child: Image.asset('assets/images/menu/menu_libras.png')),
-      ],
+          ),
+        ],
+      ),
     );
   }
 }

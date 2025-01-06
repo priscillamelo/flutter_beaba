@@ -157,8 +157,7 @@ class _DrawingScreenState extends State<DrawingScreen> {
     img.Image? imgUser = img.decodeImage(imageUser);
 
     if (imgTrace == null || imgUser == null) {
-      debugPrint('Erro: Falha ao decodificar uma ou ambas as imagens.');
-      return;
+      throw Exception('Erro: Falha ao decodificar uma ou ambas as imagens.');
     }
 
     // Calcula os pixels cobertos
