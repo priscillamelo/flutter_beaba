@@ -96,7 +96,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                     color: Colors.blue.shade100),
                 MenuButtonComponent.buildCustomButton(
                     context: context,
-                    routes: ScreenRoutes.kShapesScreen,
+                    routes: ScreenRoutes.kRecognizeShapesScreen,
                     gif: Image.asset('assets/gifs/menu/menu-shapes.gif'),
                     clipper: SquareClipper(),
                     color: Colors.green.shade100),
@@ -123,11 +123,11 @@ class _MenuWidgetState extends State<MenuWidget> {
                     color: Colors.amber.shade100),
                 MenuButtonComponent.buildCustomButton(
                     context: context,
-                    routes: ScreenRoutes.kShapesScreen,
+                    routes: ScreenRoutes.kRecognizeLettersScreen,
                     gif: Image.asset('assets/gifs/menu/menu-shapes.gif'),
                     clipper: SquareClipper(),
                     color: Colors.green.shade100),
-                MenuButtonComponent.buildCustomButton(
+                /*    MenuButtonComponent.buildCustomButton(
                     context: context,
                     routes: ScreenRoutes.kShapesScreen,
                     gif: Image.asset('assets/gifs/menu/menu-shapes.gif'),
@@ -138,7 +138,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                     routes: ScreenRoutes.kShapesScreen,
                     gif: Image.asset('assets/gifs/menu/menu-shapes.gif'),
                     clipper: SquareClipper(),
-                    color: Colors.green.shade100),
+                    color: Colors.green.shade100), */
               ],
             ),
           ),

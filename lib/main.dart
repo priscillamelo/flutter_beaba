@@ -8,6 +8,7 @@ import 'package:flutter_beaba/screens/menu_screen.dart';
 import 'package:flutter_beaba/screens/numbers_drawing_screen.dart';
 import 'package:flutter_beaba/screens/recognize_colors_screen.dart';
 import 'package:flutter_beaba/screens/reconhecer_formas.dart';
+import 'package:flutter_beaba/screens/reconhecer_letras.dart';
 
 void main() {
   runApp(const MyApp());
@@ -57,7 +58,10 @@ class MyApp extends StatelessWidget {
         ScreenRoutes.kNumbersDrawingScreen: (context) =>
             const NumbersDrawingScreen(),
         //ScreenRoutes.kShapesScreen: (context) => const DrawingScreen(),
-        ScreenRoutes.kShapesScreen: (context) => const ReconhecerFormas(),
+        ScreenRoutes.kRecognizeLettersScreen: (context) =>
+            const ReconhecerLetras(),
+        ScreenRoutes.kRecognizeShapesScreen: (context) =>
+            const ReconhecerFormas(),
         ScreenRoutes.kRecognizeColorsScreen: (context) =>
             RecognizeColorsScreen(),
         ScreenRoutes.kColorMatchingScreen: (context) =>
