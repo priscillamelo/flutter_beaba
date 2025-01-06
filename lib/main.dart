@@ -13,7 +13,6 @@ import 'package:flutter_beaba/screens/reconhecer_letras.dart';
 
 void main() {
   runApp(const MyApp());
-  // runApp(NumeroPorExtenso());
 }
 
 class MyApp extends StatelessWidget {
