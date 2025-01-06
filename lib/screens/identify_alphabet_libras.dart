@@ -32,7 +32,6 @@ class _IdentifyAlphabetLibrasState extends State<IdentifyAlphabetLibras> {
     options.add(currentLetter);
     options.shuffle();
     isCorrect = false;
-    setState(() {});
   }
 
   void _checkAnswer(String selectedLetter) {
@@ -53,50 +52,77 @@ class _IdentifyAlphabetLibrasState extends State<IdentifyAlphabetLibras> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Identifique a letra em libras'),
+        title: const Text('Qual é a letra?'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Qual é a letra deste sinal?',
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+                'assets/images/backgrounds/identify-alphabet-libras-background.png'),
+            fit: BoxFit.fill,
+          ),
+        ),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.only(
+              top: 24,
+              right: 16,
+              bottom: 8.0,
+              left: 16,
             ),
-            const SizedBox(height: 20),
-            Image.asset(
-              'assets/images/alphabet_libras/$currentLetter.png',
-              width: 200,
-              height: 200,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Spacer(flex: 1),
+                Text(
+                  'Qual letra do alfabeto esse sinal representa?',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      letterSpacing: 2,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 40),
+                Image.asset(
+                  'assets/images/alphabet_libras/$currentLetter.png',
+                  width: 200,
+                  height: 200,
+                ),
+                Spacer(flex: 4),
+                Wrap(
+                  spacing: 20,
+                  children: options
+                      .map((letter) => ElevatedButton(
+                            onPressed: () => _checkAnswer(letter),
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(color: Colors.black, width: 2),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              backgroundColor:
+                                  isCorrect && letter == currentLetter
+                                      ? Colors.green
+                                      : Colors.blue,
+                              padding: const EdgeInsets.all(32),
+                            ),
+                            child: Text(
+                              letter,
+                              style: const TextStyle(
+                                  fontSize: 32, color: Colors.white),
+                            ),
+                          ))
+                      .toList(),
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  feedbackMessage,
+                  style: TextStyle(
+                      fontSize: 24,
+                      color: isCorrect ? Colors.green : Colors.red),
+                ),
+              ],
             ),
-            const SizedBox(height: 20),
-            Wrap(
-              spacing: 10,
-              runSpacing: 10,
-              children: options
-                  .map((letter) => ElevatedButton(
-                        onPressed: () => _checkAnswer(letter),
-                        style: ElevatedButton.styleFrom(
-                          shape: const CircleBorder(),
-                          backgroundColor: isCorrect && letter == currentLetter
-                              ? Colors.green
-                              : Colors.blue,
-                          padding: const EdgeInsets.all(20),
-                        ),
-                        child: Text(
-                          letter,
-                          style: const TextStyle(fontSize: 24),
-                        ),
-                      ))
-                  .toList(),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              feedbackMessage,
-              style: TextStyle(
-                  fontSize: 24, color: isCorrect ? Colors.green : Colors.red),
-            ),
-          ],
+          ),
         ),
       ),
     );

@@ -31,37 +31,67 @@ class _RecognizeColorsScreenState extends State<RecognizeColorsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Reconhecer Cores"),
+        title: Text(
+          'Qual é a cor?',
+          style: TextStyle(
+            fontSize: 32,
+            foreground: Paint()
+              ..shader = const LinearGradient(
+                colors: [
+                  Color.fromARGB(255, 135, 25, 108),
+                  Color.fromARGB(255, 71, 37, 102),
+                  Color.fromARGB(255, 2, 32, 76),
+                ],
+              ).createShader(
+                const Rect.fromLTWH(30, 300, 400, 500),
+              ),
+          ),
+        ),
+        backgroundColor: Colors.pink.shade200,
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Qual é a cor: $targetColorName?",
-                style: TextStyle(fontSize: 24),
-              ),
-              SizedBox(height: 24),
-              Wrap(
-                spacing: 16,
-                runSpacing: 16,
-                children: options.map((colorName) {
-                  return ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: colors[colorName], // Cor do botão
-                      minimumSize: Size(100, 50),
-                    ),
-                    onPressed: () => _checkAnswer(colorName),
-                    child: Text(
-                      colorName,
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                  );
-                }).toList(),
-              ),
-            ],
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+                'assets/images/backgrounds/recognize-colors-background.png'),
+            fit: BoxFit.fill,
+          ),
+        ),
+        child: Center(
+          child: SizedBox(
+            width: double.infinity,
+            height: MediaQuery.of(context).size.height / 2,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  targetColorName,
+                  style: TextStyle(
+                    color: Colors.black87,
+                    letterSpacing: 4,
+                    fontSize: 48,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Wrap(
+                  spacing: 24,
+                  runSpacing: 32,
+                  children: options.map((colorName) {
+                    return ElevatedButton(
+                      style: ButtonStyle(
+                        shape: WidgetStatePropertyAll(CircleBorder(
+                            side: BorderSide(color: Colors.black, width: 2))),
+                        backgroundColor: WidgetStatePropertyAll(
+                            colors[colorName]), // Cor do botão
+                        minimumSize: WidgetStatePropertyAll(Size(100, 100)),
+                      ),
+                      onPressed: () => _checkAnswer(colorName),
+                      child: null,
+                    );
+                  }).toList(),
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -14,7 +14,6 @@ class AbcDrawingScreen extends StatefulWidget {
 }
 
 class _AbcDrawingScreenState extends State<AbcDrawingScreen> {
-  final Image imageBackground = Image.asset('assets/images/quadro_drawing.png');
   final GlobalKey _paintKey = GlobalKey();
 
   List<Offset> pointsUser = [];
@@ -131,7 +130,7 @@ class _AbcDrawingScreenState extends State<AbcDrawingScreen> {
                   ],
                 ),
               ),
-              ElevatedButton(
+              /* ElevatedButton(
                   style: const ButtonStyle(
                     padding: WidgetStatePropertyAll<EdgeInsets>(
                       EdgeInsets.symmetric(vertical: 20, horizontal: 30),
@@ -170,7 +169,7 @@ class _AbcDrawingScreenState extends State<AbcDrawingScreen> {
               ElevatedButton(
                 onPressed: _resetGame,
                 child: const Text('Reiniciar Jogo'),
-              ),
+              ), */
             ],
           ),
         );
