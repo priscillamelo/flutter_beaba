@@ -40,7 +40,7 @@ class _TelaCombinacaoCoresState extends State<TelaCombinacaoCores> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text('descubra a combinacao dessas cores.'),
+              const Text('Descubra a combinação dessas cores.'),
               const SizedBox(
                 height: 30,
               ),

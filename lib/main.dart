@@ -5,11 +5,13 @@ import 'package:flutter_beaba/screens/colors_screen.dart';
 import 'package:flutter_beaba/screens/curiosidades.dart';
 import 'package:flutter_beaba/screens/drawing_screen_shapes.dart';
 import 'package:flutter_beaba/screens/identify_alphabet_libras.dart';
+import 'package:flutter_beaba/screens/learn_sign_language.dart';
 import 'package:flutter_beaba/screens/menu_screen.dart';
 import 'package:flutter_beaba/screens/numbers_drawing_screen.dart';
 import 'package:flutter_beaba/screens/recognize_colors_screen.dart';
 import 'package:flutter_beaba/screens/reconhecer_formas.dart';
 import 'package:flutter_beaba/screens/reconhecer_letras.dart';
+import 'package:flutter_beaba/screens/reconhecer_numeros.dart';
 
 void main() {
   runApp(const MyApp());
@@ -58,19 +60,22 @@ class MyApp extends StatelessWidget {
         ScreenRoutes.kAbcDrawingScreen: (context) => const AbcDrawingScreen(),
         ScreenRoutes.kNumbersDrawingScreen: (context) =>
             const NumbersDrawingScreen(),
-        //ScreenRoutes.kShapesScreen: (context) => const DrawingScreen(),
+        ScreenRoutes.kShapesDrawingScreen: (context) => const DrawingScreen(),
         ScreenRoutes.kRecognizeLettersScreen: (context) =>
             const ReconhecerLetras(),
+        ScreenRoutes.kRecognizeNumbersScreen: (context) =>
+            const ReconhecerNumeroPorExtenso(),
         ScreenRoutes.kRecognizeShapesScreen: (context) =>
             const ReconhecerFormas(),
         ScreenRoutes.kRecognizeColorsScreen: (context) =>
             RecognizeColorsScreen(),
         ScreenRoutes.kColorMatchingScreen: (context) =>
             const TelaCombinacaoCores(),
-        ScreenRoutes.kCuriosidadesScreen: (context) =>
-            const CuriosidadesScreen(),
+        ScreenRoutes.kLearnSignLanguageScreen: (context) => LearnSignLanguage(),
         ScreenRoutes.kIdentifyAlphabetLibras: (context) =>
             IdentifyAlphabetLibras(),
+        ScreenRoutes.kCuriosidadesScreen: (context) =>
+            const CuriosidadesScreen(),
       },
     );
   }

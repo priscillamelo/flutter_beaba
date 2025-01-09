@@ -96,8 +96,29 @@ class _MenuWidgetState extends State<MenuWidget> {
                     color: Colors.blue.shade100),
                 MenuButtonComponent.buildCustomButton(
                     context: context,
-                    routes: ScreenRoutes.kRecognizeShapesScreen,
+                    routes: ScreenRoutes.kShapesDrawingScreen,
                     gif: Image.asset('assets/gifs/menu/menu-shapes.gif'),
+                    clipper: SquareClipper(),
+                    color: Colors.green.shade100),
+                MenuButtonComponent.buildCustomButton(
+                    context: context,
+                    routes: ScreenRoutes.kRecognizeLettersScreen,
+                    gif: Image.asset(
+                        'assets/gifs/menu/menu-recognize-letters.gif'),
+                    clipper: SquareClipper(),
+                    color: Colors.green.shade100),
+                MenuButtonComponent.buildCustomButton(
+                    context: context,
+                    routes: ScreenRoutes.kRecognizeNumbersScreen,
+                    gif: Image.asset(
+                        'assets/gifs/menu/menu-recognize-numbers.gif'),
+                    clipper: SquareClipper(),
+                    color: Colors.green.shade100),
+                MenuButtonComponent.buildCustomButton(
+                    context: context,
+                    routes: ScreenRoutes.kRecognizeShapesScreen,
+                    gif: Image.asset(
+                        'assets/gifs/menu/menu-recognize-shapes.gif'),
                     clipper: SquareClipper(),
                     color: Colors.green.shade100),
                 MenuButtonComponent.buildCustomButton(
@@ -116,6 +137,13 @@ class _MenuWidgetState extends State<MenuWidget> {
                     color: Colors.purple.shade100),
                 MenuButtonComponent.buildCustomButton(
                     context: context,
+                    routes: ScreenRoutes.kLearnSignLanguageScreen,
+                    gif: Image.asset(
+                        'assets/gifs/menu/menu-learn-sign-language.gif'),
+                    clipper: SquareClipper(),
+                    color: Colors.amber.shade100),
+                MenuButtonComponent.buildCustomButton(
+                    context: context,
                     routes: ScreenRoutes.kIdentifyAlphabetLibras,
                     gif: Image.asset(
                         'assets/gifs/menu/menu-identify-alphabet-libras.gif'),
@@ -123,14 +151,8 @@ class _MenuWidgetState extends State<MenuWidget> {
                     color: Colors.amber.shade100),
                 MenuButtonComponent.buildCustomButton(
                     context: context,
-                    routes: ScreenRoutes.kRecognizeLettersScreen,
-                    gif: Image.asset('assets/gifs/menu/menu-shapes.gif'),
-                    clipper: SquareClipper(),
-                    color: Colors.green.shade100),
-                MenuButtonComponent.buildCustomButton(
-                    context: context,
                     routes: ScreenRoutes.kCuriosidadesScreen,
-                    gif: Image.asset('assets/gifs/menu/menu-shapes.gif'),
+                    gif: Image.asset('assets/gifs/menu/menu-curiosities.gif'),
                     clipper: SquareClipper(),
                     color: Colors.green.shade100),
               ],

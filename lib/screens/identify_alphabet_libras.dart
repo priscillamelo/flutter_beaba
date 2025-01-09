@@ -35,17 +35,33 @@ class _IdentifyAlphabetLibrasState extends State<IdentifyAlphabetLibras> {
   }
 
   void _checkAnswer(String selectedLetter) {
+    bool isCorrect = selectedLetter == currentLetter;
+
     setState(() {
-      if (selectedLetter == currentLetter) {
-        feedbackMessage = 'Correto!';
-        Future.delayed(const Duration(seconds: 2), () {
-          feedbackMessage = '';
-          _generateNewQuestion();
-        });
-      } else {
-        feedbackMessage = 'Tente novamente';
-      }
+      _showResultDialog(isCorrect);
+      if (isCorrect) _generateNewQuestion();
     });
+  }
+
+  void _showResultDialog(bool isCorrect) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text(isCorrect
+            ? 'Parabéns! Você conseguiu!!'
+            : 'Hummm... Vamos tentar novamente!'),
+        content: Image.asset(
+            isCorrect ? 'assets/images/winner.png' : 'assets/images/loser.png'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text("Continuar"),
+          ),
+        ],
+      ),
+    );
   }
 
   @override

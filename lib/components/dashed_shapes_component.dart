@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_beaba/models/shapes.dart';
 
 class DashedShapeComponent extends CustomPainter {
-  final String shapes;
+  final String shape;
 
-  DashedShapeComponent({required this.shapes});
+  DashedShapeComponent({required this.shape});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -21,7 +21,7 @@ class DashedShapeComponent extends CustomPainter {
     canvas.translate(centerX, centerY);
 
     // Obtenha o caminho da forma do mapa de paths
-    final Path? shapesPath = ShapesPaths.shapesPaths[shapes];
+    final Path? shapesPath = ShapesPaths.shapesPaths[shape];
 
     if (shapesPath != null) {
       // Desenhar a forma tracejada

@@ -130,46 +130,60 @@ class _AbcDrawingScreenState extends State<AbcDrawingScreen> {
                   ],
                 ),
               ),
-              /* ElevatedButton(
-                  style: const ButtonStyle(
-                    padding: WidgetStatePropertyAll<EdgeInsets>(
-                      EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-                    ),
-                  ),
-                  onPressed: () async {
-                    late bool winner;
-
-                    Uint8List imageTrace =
-                        await DrawingProcessorComponent.captureImageLetterTrace(
-                            globalKeyTrace);
-                    Uint8List imageUser =
-                        await DrawingProcessorComponent.captureImageLetterUser(
-                            globalKeyUser);
-                    setState(() {
-                      winner = DrawingProcessorComponent.compareImages(
-                          imageTrace, imageUser);
-                    });
-
-                    if (winner == true) {
-                      if (currentLetterIndex < alphabet.length - 1) {
-                        setState(() {
-                          currentLetterIndex++;
-                          pointsUser.clear(); // Limpa o desenho
-                        });
-                      } else {
-                        _resetGame(); // Reinicia ao completar o alfabeto
-                      }
-                    }
-                    _showDialogImage(winner);
-                  },
-                  child: Text(
-                    'Próxima letra',
-                    style: Theme.of(context).textTheme.displayMedium,
-                  )),
               ElevatedButton(
-                onPressed: _resetGame,
-                child: const Text('Reiniciar Jogo'),
-              ), */
+                style: const ButtonStyle(
+                  side: WidgetStatePropertyAll(BorderSide(
+                    width: 2,
+                    color: Colors.black,
+                  )),
+                  padding: WidgetStatePropertyAll<EdgeInsets>(
+                    EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+                  ),
+                ),
+                onPressed: () async {
+                  late bool winner;
+
+                  Uint8List imageTrace =
+                      await DrawingProcessorComponent.captureImageLetterTrace(
+                          globalKeyTrace);
+                  Uint8List imageUser =
+                      await DrawingProcessorComponent.captureImageLetterUser(
+                          globalKeyUser);
+                  setState(() {
+                    winner = DrawingProcessorComponent.compareImages(
+                        imageTrace, imageUser);
+                  });
+
+                  if (winner == true) {
+                    if (currentLetterIndex < alphabet.length - 1) {
+                      setState(() {
+                        currentLetterIndex++;
+                        pointsUser.clear(); // Limpa o desenho
+                      });
+                    } else {
+                      _resetGame(); // Reinicia ao completar o alfabeto
+                    }
+                  }
+                  _showDialogImage(winner);
+                },
+                child: Text(
+                  'Próxima letra',
+                  style: TextStyle(
+                    fontSize: 32,
+                    foreground: Paint()
+                      ..shader = const LinearGradient(
+                        colors: [
+                          ui.Color.fromARGB(255, 255, 3, 158),
+                          ui.Color.fromARGB(255, 255, 153, 0),
+                          ui.Color.fromARGB(255, 0, 162, 255),
+                          ui.Color.fromARGB(255, 76, 0, 255),
+                        ],
+                      ).createShader(
+                        const Rect.fromLTWH(30, 300, 400, 500),
+                      ),
+                  ),
+                ),
+              ),
             ],
           ),
         );

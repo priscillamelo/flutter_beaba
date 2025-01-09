@@ -121,15 +121,16 @@ class _RecognizeColorsScreenState extends State<RecognizeColorsScreen> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: Text(isCorrect ? "Parabéns!" : "Tente novamente!"),
-        content: Text(isCorrect
-            ? "Você acertou a cor $targetColorName!"
-            : "A cor correta era $targetColorName."),
+        title: Text(isCorrect
+            ? 'Parabéns! Você conseguiu!!'
+            : 'Hummm... Vamos tentar novamente!'),
+        content: Image.asset(
+            isCorrect ? 'assets/images/winner.png' : 'assets/images/loser.png'),
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.of(context).pop();
-              _generateQuestion();
+              Navigator.pop(context);
+              if (isCorrect) _generateQuestion();
             },
             child: Text("Continuar"),
           ),
