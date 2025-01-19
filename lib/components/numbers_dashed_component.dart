@@ -10,10 +10,9 @@ class NumbersDashedComponent extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-
     final Path? numberPath = NumbersPath.numbersPath[number];
 
-    if(numberPath != null){
+    if (numberPath != null) {
       final Rect bounds = numberPath.getBounds();
 
       // Centralize o Path no canvas
@@ -25,8 +24,6 @@ class NumbersDashedComponent extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    // TODO: implement shouldRepaint
     throw UnimplementedError();
   }
-
 }

@@ -84,6 +84,7 @@ class _AbcDrawingScreenState extends State<AbcDrawingScreen> {
                         child: CustomPaint(
                           size: const Size(500, 500),
                           painter: DrawingDashedComponent(
+                            shape: null,
                             letter: alphabet[currentLetterIndex],
                             number: null,
                           ),

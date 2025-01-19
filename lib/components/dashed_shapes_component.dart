@@ -11,21 +11,21 @@ class DashedShapeComponent extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = Colors.red
-      ..strokeWidth = 2.0
+      ..strokeWidth = 5.0
       ..style = PaintingStyle.stroke;
 
-    final double centerX = size.width / 4;
+    final double centerX = size.width / 2;
     final double centerY = size.height / 2;
 
+    print('aaaa ${shape}');
     // Centralize o conteúdo no centro do canvas
     canvas.translate(centerX, centerY);
-
     // Obtenha o caminho da forma do mapa de paths
-    final Path? shapesPath = ShapesPaths.shapesPaths[shape];
+    final Path? path = ShapesPaths.shapesPaths[shape];
 
-    if (shapesPath != null) {
+    if (path != null) {
       // Desenhar a forma tracejada
-      Path dashedPath = _createDashedPath(shapesPath, 5.0, 5.0);
+      Path dashedPath = _createDashedPath(path, 7.0, 7.0);
       canvas.drawPath(dashedPath, paint);
     }
   }

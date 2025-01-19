@@ -1,8 +1,9 @@
-/* import 'package:flutter_tts/flutter_tts.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class TextToSpeechComponent {
   final FlutterTts _tts = FlutterTts();
   final String language = 'pt-BR';
+  late Future<dynamic> voices;
 
   TextToSpeechComponent() {
     _initializeTts();
@@ -14,6 +15,7 @@ class TextToSpeechComponent {
     await _tts.setVolume(1.0);
     await _tts.setPitch(1.5); // Aumenta o tom, soando mais infantil
     await _tts.setSpeechRate(0.5);
+    voices = _tts.getVoices;
   }
 
   Future<void> speak(String text) async {
@@ -28,4 +30,3 @@ class TextToSpeechComponent {
     await _tts.stop();
   }
 }
- */
