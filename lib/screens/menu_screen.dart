@@ -12,7 +12,7 @@ class MenuScreen extends StatelessWidget {
       body: Stack(children: [
         Image.asset(
           'assets/images/backgrounds/menu-background.jpg',
-          fit: BoxFit.fill,
+          fit: BoxFit.cover,
           height: MediaQuery.of(context).size.height,
         ),
         MenuWidget()
@@ -75,7 +75,6 @@ class _MenuWidgetState extends State<MenuWidget> {
             ),
           ),
           Expanded(
-            // Use Expanded para que o GridView ocupe o restante do espaço disponível
             child: GridView.count(
               crossAxisCount: 2,
               mainAxisSpacing: 16,
@@ -149,6 +148,13 @@ class _MenuWidgetState extends State<MenuWidget> {
                         'assets/gifs/menu/menu-identify-alphabet-libras.gif'),
                     clipper: SquareClipper(),
                     color: Colors.amber.shade100),
+                MenuButtonComponent.buildCustomButton(
+                    context: context,
+                    routes: ScreenRoutes.kWordFormationScreen,
+                    gif:
+                        Image.asset('assets/gifs/menu/menu-word-formation.gif'),
+                    clipper: SquareClipper(),
+                    color: Colors.yellow.shade200),
                 MenuButtonComponent.buildCustomButton(
                     context: context,
                     routes: ScreenRoutes.kCuriosidadesScreen,

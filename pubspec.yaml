@@ -32,6 +32,7 @@ flutter:
     - assets/images/letras_ma/
     - assets/images/letras_mi/
     - assets/images/numeros/
+    - assets/images/word_formation/
     - assets/gifs/
     - assets/gifs/menu/
   fonts:

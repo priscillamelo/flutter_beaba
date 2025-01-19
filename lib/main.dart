@@ -12,6 +12,7 @@ import 'package:flutter_beaba/screens/recognize_colors_screen.dart';
 import 'package:flutter_beaba/screens/reconhecer_formas.dart';
 import 'package:flutter_beaba/screens/reconhecer_letras.dart';
 import 'package:flutter_beaba/screens/reconhecer_numeros.dart';
+import 'package:flutter_beaba/screens/word_formation_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -74,6 +75,8 @@ class MyApp extends StatelessWidget {
         ScreenRoutes.kLearnSignLanguageScreen: (context) => LearnSignLanguage(),
         ScreenRoutes.kIdentifyAlphabetLibras: (context) =>
             IdentifyAlphabetLibras(),
+        ScreenRoutes.kWordFormationScreen: (context) =>
+            const WordFormationScreen(),
         ScreenRoutes.kCuriosidadesScreen: (context) =>
             const CuriosidadesScreen(),
       },

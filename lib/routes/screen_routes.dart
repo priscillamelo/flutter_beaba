@@ -8,6 +8,7 @@ class ScreenRoutes {
   static const String kRecognizeNumbersScreen = '/recognize-numbers-screen';
   static const String kRecognizeColorsScreen = '/recognize-colors-screen';
   static const String kColorMatchingScreen = '/color-matching-screen';
+  static const String kWordFormationScreen = '/word-formation-screen';
   static const String kCuriosidadesScreen = '/curiosidades-screen';
   static const String kLearnSignLanguageScreen = '/learn-sign-language-screen';
   static const String kIdentifyAlphabetLibras =

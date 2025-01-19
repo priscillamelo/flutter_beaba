@@ -4,6 +4,7 @@ import 'package:flutter_beaba/components/drawing_dashed_component.dart';
 import 'package:flutter_beaba/components/drawing_processor_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_beaba/components/drawing_user.dart';
+import 'package:flutter_beaba/components/text_to_speech_component.dart';
 import 'package:flutter_beaba/components/widget_to_image.dart';
 
 class AbcDrawingScreen extends StatefulWidget {
@@ -29,6 +30,7 @@ class _AbcDrawingScreenState extends State<AbcDrawingScreen> {
   @override
   void initState() {
     super.initState();
+    TextToSpeechComponent.speak("Vamos desenhar o alfabeto!");
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await DrawingProcessorComponent.captureImageLetterTrace(globalKeyTrace);
     });
@@ -36,6 +38,9 @@ class _AbcDrawingScreenState extends State<AbcDrawingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    TextToSpeechComponent.awaitSpeakCompletion();
+    TextToSpeechComponent.speak(
+        "Essa é a letra ${alphabet[currentLetterIndex]}");
     return Scaffold(
       appBar: AppBar(
         //TODO: COLOCAR A MESMA COR DO BACKGROUND IMAGE
@@ -57,24 +62,6 @@ class _AbcDrawingScreenState extends State<AbcDrawingScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              /* Text(
-                'Vamos desenhar o alfabeto!',
-                style: TextStyle(
-                  foreground: Paint()
-                    ..shader = const LinearGradient(
-                      colors: [
-                        Color.fromARGB(255, 255, 59, 180),
-                        Color.fromARGB(255, 255, 184, 77),
-                        Color.fromARGB(255, 43, 177, 255),
-                        Color.fromARGB(255, 116, 57, 255),
-                      ],
-                    ).createShader(
-                      const Rect.fromLTWH(30, 300, 400, 500),
-                    ),
-                  fontSize: 32,
-                ),
-                textAlign: TextAlign.center,
-              ), */
               Center(
                 child: Stack(
                   children: [
@@ -167,7 +154,7 @@ class _AbcDrawingScreenState extends State<AbcDrawingScreen> {
                   _showDialogImage(winner);
                 },
                 child: Text(
-                  'Próxima letra',
+                  'Verificar letra',
                   style: TextStyle(
                     fontSize: 32,
                     foreground: Paint()

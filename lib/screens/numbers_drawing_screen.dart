@@ -149,7 +149,7 @@ class _NumbersDrawingScreenState extends State<NumbersDrawingScreen> {
                     _showDialogImage(winner);
                   },
                   child: Text(
-                    'Próximo Número',
+                    'Verificar Número',
                     style: TextStyle(
                       fontSize: 32,
                       foreground: Paint()
