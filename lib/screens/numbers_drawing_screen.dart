@@ -65,6 +65,7 @@ class _NumbersDrawingScreenState extends State<NumbersDrawingScreen> {
                         child: CustomPaint(
                           size: const Size(500, 500),
                           painter: DrawingDashedComponent(
+                            shape: null,
                             letter: null,
                             number: numbers[currentNumberIndex],
                           ),

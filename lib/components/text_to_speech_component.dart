@@ -21,14 +21,6 @@ class TextToSpeechComponent {
     }
   }
 
-  static void getLanguagesAndVoices() async {
-    List<dynamic> languages = await _tts.getLanguages;
-    List<dynamic> voices = await _tts.getVoices;
-
-    print("Languages: $languages");
-    print("Voices: $voices");
-  }
-
   static void pause() async {
     try {
       await _tts.pause();

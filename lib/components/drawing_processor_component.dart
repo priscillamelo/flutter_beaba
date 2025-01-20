@@ -61,12 +61,6 @@ class DrawingProcessorComponent {
         img.Pixel pixelTrace = imgTrace.getPixelSafe(x, y);
         img.Pixel pixelUser = imgUser.getPixelSafe(x, y);
 
-        //TODO: fazer uma verificação com a quantidade de pixels do usuário, se caso for maior que 50% da imagem, o usuário desenhou mais que o esperado.
-        //TODO: verificar se o usuário desenhou mais que o esperado
-        /* if (pixelUser.b > 0) {
-          totalPixelsLetterUser++;
-        } */
-
         if (pixelTrace.r > 0) {
           totalPixelsLetterDashed++;
 

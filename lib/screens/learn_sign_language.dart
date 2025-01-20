@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_beaba/components/aprendendo_libras_comp.dart';
 
 class LearnSignLanguage extends StatefulWidget {
   const LearnSignLanguage({super.key});
@@ -10,6 +11,11 @@ class LearnSignLanguage extends StatefulWidget {
 class _LearnSignLanguageState extends State<LearnSignLanguage> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Aprendendo Libras'),
+      ),
+      body: AprendendoLibrasComp(),
+    );
   }
 }
