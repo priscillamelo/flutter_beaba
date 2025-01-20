@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
           appBar: AppBar(
             toolbarHeight: 70,
-            backgroundColor: Colors.lightBlue.shade100,
+            backgroundColor: Color.fromARGB(255, 178, 237, 245),
             centerTitle: true,
             title: Image.asset(
               'assets/images/logo.png',

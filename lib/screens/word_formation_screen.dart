@@ -23,8 +23,6 @@ class _WordFormationScreenState extends State<WordFormationScreen> {
   @override
   void initState() {
     super.initState();
-    TextToSpeechComponent.speak("Vamos formar palavras!");
-
     level = 1;
     startGame();
   }
@@ -58,6 +56,9 @@ class _WordFormationScreenState extends State<WordFormationScreen> {
     late String textButton;
 
     if (slots.join('') == chosenWord) {
+      TextToSpeechComponent.speak(
+          "Parabéns! Você formou a palavra $chosenWord corretamente!");
+
       feedbackTitle = "Parabéns!";
       feedbackMessage = "Você formou a palavra corretamente! 🎉";
       textButton = "Próxima rodada";
@@ -68,6 +69,8 @@ class _WordFormationScreenState extends State<WordFormationScreen> {
         level++;
       }
     } else {
+      TextToSpeechComponent.speak(
+          "Humm... Você não acertou. Vamos tentar outra palavra?");
       feedbackTitle = "Humm...";
       feedbackMessage = "Você não acertou. Vamos tentar outra palavra?";
       textButton = "Jogar novamente";
@@ -96,8 +99,8 @@ class _WordFormationScreenState extends State<WordFormationScreen> {
     return Scaffold(
       backgroundColor: Color(0xFFF0F5F5),
       appBar: AppBar(
+        backgroundColor: Color(0xFFF0F5F5),
         title: Text('Forme a Palavra'),
-        centerTitle: true,
       ),
       body: Center(
         child: Padding(
@@ -105,11 +108,13 @@ class _WordFormationScreenState extends State<WordFormationScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              Text('Vamos formar palavras!'),
               Image.asset(
                 'assets/images/word_formation/$imageWord.png',
                 width: 200,
                 height: 200,
               ),
+              SizedBox(height: 8),
               Wrap(
                 runSpacing: 8,
                 spacing: 8,
@@ -148,6 +153,7 @@ class _WordFormationScreenState extends State<WordFormationScreen> {
                   );
                 }).toList(),
               ),
+              SizedBox(height: 8),
               Wrap(
                 spacing: 8,
                 runSpacing: 8,

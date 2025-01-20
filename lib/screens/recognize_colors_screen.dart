@@ -47,7 +47,7 @@ class _RecognizeColorsScreenState extends State<RecognizeColorsScreen> {
               ),
           ),
         ),
-        backgroundColor: Colors.pink.shade200,
+        backgroundColor: Color.fromARGB(255, 246, 174, 230),
       ),
       body: Container(
         decoration: BoxDecoration(

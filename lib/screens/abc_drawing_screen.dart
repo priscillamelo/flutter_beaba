@@ -24,27 +24,31 @@ class _AbcDrawingScreenState extends State<AbcDrawingScreen> {
   late GlobalKey globalKeyUser;
 
   int currentLetterIndex = 0;
+  bool said = false;
   final List<String> alphabet =
       List.generate(26, (index) => String.fromCharCode(65 + index)); // A-Z
 
   @override
   void initState() {
     super.initState();
-    TextToSpeechComponent.speak("Vamos desenhar o alfabeto!");
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await DrawingProcessorComponent.captureImageLetterTrace(globalKeyTrace);
     });
+    TextToSpeechComponent.speak("Vamos desenhar o alfabeto!");
   }
 
   @override
   Widget build(BuildContext context) {
-    TextToSpeechComponent.awaitSpeakCompletion();
-    TextToSpeechComponent.speak(
-        "Essa é a letra ${alphabet[currentLetterIndex]}");
+    if (said == false) {
+      TextToSpeechComponent.speak(
+          "Desenha a letra: ${alphabet[currentLetterIndex]}");
+      setState(() {
+        said = true;
+      });
+    }
     return Scaffold(
       appBar: AppBar(
-        //TODO: COLOCAR A MESMA COR DO BACKGROUND IMAGE
-        backgroundColor: Colors.yellow.shade300,
+        backgroundColor: Color.fromARGB(255, 244, 235, 132),
         actions: [
           IconButton(
             icon: const Icon(Icons.delete),
@@ -196,6 +200,7 @@ class _AbcDrawingScreenState extends State<AbcDrawingScreen> {
                 onPressed: () {
                   setState(() {
                     pointsUser.clear();
+                    said = false;
                   });
                   Navigator.of(context).pop();
                 },

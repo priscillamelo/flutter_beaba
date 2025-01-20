@@ -8,8 +8,8 @@ class ContainerComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double width = 70;
-    final double height = 70;
+    final double width = colorBackground == Colors.lightGreen ? 70 : 50;
+    final double height = width;
 
     return Container(
       width: width,

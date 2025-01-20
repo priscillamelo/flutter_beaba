@@ -72,16 +72,13 @@ class _IdentifyAlphabetLibrasState extends State<IdentifyAlphabetLibras> {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.only(
-            top: 24,
-            right: 16,
-            bottom: 8.0,
-            left: 16,
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 24,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Spacer(flex: 1),
               Text(
                 'Qual letra do alfabeto esse sinal representa?',
                 textAlign: TextAlign.center,
@@ -90,15 +87,13 @@ class _IdentifyAlphabetLibrasState extends State<IdentifyAlphabetLibras> {
                     fontSize: 24,
                     fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 40),
               Image.asset(
                 'assets/images/alphabet_libras/$currentLetter.png',
                 width: 200,
                 height: 200,
               ),
-              Spacer(flex: 4),
               Wrap(
-                spacing: 20,
+                spacing: 24,
                 children: options
                     .map((letter) => ElevatedButton(
                           onPressed: () => _checkAnswer(letter),
@@ -107,10 +102,7 @@ class _IdentifyAlphabetLibrasState extends State<IdentifyAlphabetLibras> {
                               side: BorderSide(color: Colors.black, width: 2),
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            backgroundColor:
-                                isCorrect && letter == currentLetter
-                                    ? Colors.green
-                                    : Colors.blue,
+                            backgroundColor: Colors.blue,
                             padding: const EdgeInsets.all(32),
                           ),
                           child: Text(
@@ -120,12 +112,6 @@ class _IdentifyAlphabetLibrasState extends State<IdentifyAlphabetLibras> {
                           ),
                         ))
                     .toList(),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                feedbackMessage,
-                style: TextStyle(
-                    fontSize: 24, color: isCorrect ? Colors.green : Colors.red),
               ),
             ],
           ),

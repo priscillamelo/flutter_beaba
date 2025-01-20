@@ -12,7 +12,8 @@ class MenuScreen extends StatelessWidget {
       body: Stack(children: [
         Image.asset(
           'assets/images/backgrounds/menu-background.jpg',
-          fit: BoxFit.cover,
+          fit: BoxFit.fill,
+          width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
         ),
         MenuWidget()
