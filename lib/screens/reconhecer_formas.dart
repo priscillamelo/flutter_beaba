@@ -21,17 +21,16 @@ class _ReconhecerFormasState extends State<ReconhecerFormas> {
     'triangulo.png',
   ];
 
-  late String imagemAleatoria; // ***Imagem da primeira linha
+  late String imagemAleatoria; // Imagem da primeira linha
   late List<String> segundaLinha;
-  String imagemFeedback = ''; // ***Caminho da imagem de feedback
-  int pontuacao = 0; // ***Pontuação inicial
-
+  String imagemFeedback = ''; // Caminho da imagem de feedback
+  int pontuacao = 0; // Pontuação inicial
   final CountDownController _countDownController =
-      CountDownController(); // ***Vai controlar o cronômetro do jogo
+      CountDownController(); // Controlador do cronômetro do jogo
+  Color backgroundColor = Colors.blue.shade600; // Cor inicial do fundo
 
   @override
   void initState() {
-    //***Aqui o jogo é inicializado
     super.initState();
     _inicializarJogo();
   }
@@ -47,31 +46,35 @@ class _ReconhecerFormasState extends State<ReconhecerFormas> {
         }
       }
       segundaLinha.shuffle();
-      imagemFeedback = ''; // ***Limpa feedback anterior
+      imagemFeedback = ''; // Limpa feedback anterior
+      backgroundColor = Colors.blue.shade600; // Reseta cor de fundo
     });
   }
 
   void validarEscolha(String escolha) {
     setState(() {
       if (escolha == imagemAleatoria) {
-        imagemFeedback =
-            'assets/images/letras_ma/acertou2.png'; // ***Caminho da imagem de acerto
-        pontuacao += 10; // ***Adiciona 10 pontos no acerto
+        imagemFeedback = 'assets/images/letras_ma/acertou2.png';
+        pontuacao += 10;
+        backgroundColor = const Color.fromARGB(255, 19, 199, 25); // Muda fundo para verde no acerto
       } else {
-        imagemFeedback =
-            'assets/images/letras_ma/errou2.png'; // ***Caminho da imagem de erro
-        pontuacao -= 5; // ***Remove 5 pontos no erro
-        if (pontuacao < 0) pontuacao = 0; // ***Evita pontuação negativa
+        imagemFeedback = 'assets/images/letras_ma/errou2.png';
+        pontuacao -= 5;
+        if (pontuacao < 0) pontuacao = 0;
+        backgroundColor = const Color.fromARGB(255, 231, 28, 13); // Muda fundo para vermelho no erro
       }
     });
 
-    Future.delayed(const Duration(seconds: 1), _inicializarJogo);
+    // Reseta o fundo para azul e inicializa o próximo jogo após 1 segundo
+    Future.delayed(const Duration(seconds: 1), () {
+      _inicializarJogo();
+    });
   }
 
   void _mostrarFimDoJogo() {
     showDialog(
       context: context,
-      barrierDismissible: false, // ***Impede fechar ao clicar fora
+      barrierDismissible: false, // Impede fechar ao clicar fora
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
@@ -89,11 +92,11 @@ class _ReconhecerFormasState extends State<ReconhecerFormas> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pop(context); // ***Fecha o diálogo
+                Navigator.pop(context); // Fecha o diálogo
                 setState(() {
-                  pontuacao = 0; // ***Reinicia a pontuação
-                  _countDownController.restart(); // ***Reinicia o cronômetro
-                  _inicializarJogo(); // ***Reinicia o jogo
+                  pontuacao = 0; // Reinicia a pontuação
+                  _countDownController.restart(); // Reinicia o cronômetro
+                  _inicializarJogo(); // Reinicia o jogo
                 });
               },
               child: const Text("Jogar Novamente"),
@@ -101,7 +104,7 @@ class _ReconhecerFormasState extends State<ReconhecerFormas> {
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
-                Navigator.pop(context); // ***Volta para a tela anterior
+                Navigator.pop(context); // Volta para a tela anterior
               },
               child: const Text("Sair"),
             ),
@@ -117,40 +120,92 @@ class _ReconhecerFormasState extends State<ReconhecerFormas> {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      backgroundColor: Colors.blue.shade600,
+      backgroundColor: backgroundColor,
       appBar: AppBar(
-        title: Text(
-          'Reconhecer Formas',
-          style: GoogleFonts.ubuntuMono(
-            fontSize: _getTextSize(screenWidth, 0.075),
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+  toolbarHeight: 100, // Aumenta a altura do AppBar
+  title: Text(
+    '\n Reconhecer \n     Formas',
+    style: TextStyle(
+      fontSize: 30,
+      fontFamily: 'DynaPuff',
+      fontWeight: FontWeight.bold,
+      letterSpacing: 7,
+      foreground: Paint()
+        ..shader = const LinearGradient(
+          colors: [
+            Color.fromARGB(255, 247, 237, 243),
+            Color.fromARGB(255, 248, 246, 242),
+            Color.fromARGB(255, 255, 255, 255),
+            Color.fromARGB(255, 243, 241, 247),
+          ],
+        ).createShader(
+          const Rect.fromLTWH(30, 300, 400, 500),
         ),
-        centerTitle: true,
-        backgroundColor: Colors.blue.shade600,
-      ),
+      shadows: [
+        Shadow(
+          offset: Offset(0, 0),
+          blurRadius: 10,
+          color: Colors.white.withAlpha(180), // Efeito de brilho
+        ),
+        Shadow(
+          offset: Offset(0, 3),
+          blurRadius: 10,
+          color: Colors.blue.withAlpha(150), // Brilho adicional em azul
+        ),
+      ],
+    ),
+  ),
+  centerTitle: true,
+  backgroundColor: backgroundColor, // Sincroniza com o fundo
+),
+
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Pontuação: $pontuacao',
-              style: GoogleFonts.ubuntuMono(
-                fontSize: _getTextSize(screenWidth, 0.08),
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
+            'Pontuação: $pontuacao',
+            style: TextStyle(
+              fontSize: 40,
+              fontFamily: 'DynaPuff',
+              fontWeight: FontWeight.bold,
+              letterSpacing: 2,
+              foreground: Paint()
+                ..shader = const LinearGradient(
+                  colors: [
+                    Color.fromARGB(255, 255, 98, 59),
+                    Color.fromARGB(255, 255, 184, 77),
+                    Color.fromARGB(255, 223, 252, 58),
+                    Color.fromARGB(255, 235, 255, 57),
+                  ],
+                ).createShader(
+                  const Rect.fromLTWH(20, 30, 40, 90),
+                ),
+              shadows: [
+                Shadow(
+                  offset: Offset(0, 0),
+                  blurRadius: 10,
+                  color:
+                      Colors.white.withValues(alpha: 0.7), // Efeito de brilho
+                ),
+                Shadow(
+                  offset: Offset(0, 3),
+                  blurRadius: 10,
+                  color: Colors.blue
+                      .withValues(alpha: 0.6), // Brilho adicional em azul
+                ),
+              ],
             ),
+          ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20),
               child: CircularCountDownTimer(
-                duration: 20, // Duração de 1 minuto
+                duration: 20, // Duração de 20 segundos
                 initialDuration: 0,
                 controller: _countDownController,
                 width: _getSize(screenWidth, 0.2),
                 height: _getSize(screenWidth, 0.2),
-                ringColor: Colors.grey[300]!,
+                ringColor: const Color.fromARGB(255, 230, 54, 54)!,
                 fillColor: Colors.blue[100]!,
                 backgroundColor: Colors.blue[400],
                 strokeWidth: 10.0,
@@ -166,7 +221,7 @@ class _ReconhecerFormasState extends State<ReconhecerFormas> {
             ),
             Image.asset(
               'assets/images/formas1/$imagemAleatoria',
-              width: _getSize(screenWidth, 0.4),
+              width: _getSize(screenWidth, 0.7),
               height: _getSize(screenHeight, 0.3),
             ),
             Row(
