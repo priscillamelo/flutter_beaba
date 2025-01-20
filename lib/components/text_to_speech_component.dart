@@ -10,7 +10,6 @@ class TextToSpeechComponent {
     await _tts.setVolume(1.0);
     await _tts.setPitch(1.2); // Aumenta o tom, soando mais infantil
     await _tts.setSpeechRate(0.5);
-    voices = _tts.getVoices;
   }
 
   static Future<void> speak(String text) async {
@@ -20,14 +19,6 @@ class TextToSpeechComponent {
     } catch (e) {
       throw Exception("Erro ao falar: $e");
     }
-  }
-
-  static void getLanguagesAndVoices() async {
-    List<dynamic> languages = await _tts.getLanguages;
-    List<dynamic> voices = await _tts.getVoices;
-
-    print("Languages: $languages");
-    print("Voices: $voices");
   }
 
   static void pause() async {
