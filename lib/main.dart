@@ -12,6 +12,7 @@ import 'package:flutter_beaba/screens/recognize_colors_screen.dart';
 import 'package:flutter_beaba/screens/reconhecer_formas.dart';
 import 'package:flutter_beaba/screens/reconhecer_letras.dart';
 import 'package:flutter_beaba/screens/reconhecer_numeros.dart';
+import 'package:flutter_beaba/screens/word_formation_screen.dart';
 import 'package:flutter_beaba/screens/show-geometrics-shapes-screen.dart';
 
 void main() {
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
           appBar: AppBar(
             toolbarHeight: 70,
-            backgroundColor: Colors.lightBlue.shade100,
+            backgroundColor: Color.fromARGB(255, 178, 237, 245),
             centerTitle: true,
             title: Image.asset(
               'assets/images/logo.png',
@@ -77,6 +78,8 @@ class MyApp extends StatelessWidget {
         ScreenRoutes.kLearnSignLanguageScreen: (context) => LearnSignLanguage(),
         ScreenRoutes.kIdentifyAlphabetLibras: (context) =>
             IdentifyAlphabetLibras(),
+        ScreenRoutes.kWordFormationScreen: (context) =>
+            const WordFormationScreen(),
         ScreenRoutes.kCuriosidadesScreen: (context) =>
             const CuriosidadesScreen(),
       },

@@ -4,6 +4,7 @@ import 'package:flutter_beaba/components/drawing_dashed_component.dart';
 import 'package:flutter_beaba/components/drawing_processor_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_beaba/components/drawing_user.dart';
+import 'package:flutter_beaba/components/text_to_speech_component.dart';
 import 'package:flutter_beaba/components/widget_to_image.dart';
 
 class AbcDrawingScreen extends StatefulWidget {
@@ -23,6 +24,7 @@ class _AbcDrawingScreenState extends State<AbcDrawingScreen> {
   late GlobalKey globalKeyUser;
 
   int currentLetterIndex = 0;
+  bool said = false;
   final List<String> alphabet =
       List.generate(26, (index) => String.fromCharCode(65 + index)); // A-Z
 
@@ -32,14 +34,21 @@ class _AbcDrawingScreenState extends State<AbcDrawingScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await DrawingProcessorComponent.captureImageLetterTrace(globalKeyTrace);
     });
+    TextToSpeechComponent.speak("Vamos desenhar o alfabeto!");
   }
 
   @override
   Widget build(BuildContext context) {
+    if (said == false) {
+      TextToSpeechComponent.speak(
+          "Desenha a letra: ${alphabet[currentLetterIndex]}");
+      setState(() {
+        said = true;
+      });
+    }
     return Scaffold(
       appBar: AppBar(
-        //TODO: COLOCAR A MESMA COR DO BACKGROUND IMAGE
-        backgroundColor: Colors.yellow.shade300,
+        backgroundColor: Color.fromARGB(255, 244, 235, 132),
         actions: [
           IconButton(
             icon: const Icon(Icons.delete),
@@ -57,24 +66,6 @@ class _AbcDrawingScreenState extends State<AbcDrawingScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              /* Text(
-                'Vamos desenhar o alfabeto!',
-                style: TextStyle(
-                  foreground: Paint()
-                    ..shader = const LinearGradient(
-                      colors: [
-                        Color.fromARGB(255, 255, 59, 180),
-                        Color.fromARGB(255, 255, 184, 77),
-                        Color.fromARGB(255, 43, 177, 255),
-                        Color.fromARGB(255, 116, 57, 255),
-                      ],
-                    ).createShader(
-                      const Rect.fromLTWH(30, 300, 400, 500),
-                    ),
-                  fontSize: 32,
-                ),
-                textAlign: TextAlign.center,
-              ), */
               Center(
                 child: Stack(
                   children: [
@@ -168,7 +159,7 @@ class _AbcDrawingScreenState extends State<AbcDrawingScreen> {
                   _showDialogImage(winner);
                 },
                 child: Text(
-                  'Próxima letra',
+                  'Verificar letra',
                   style: TextStyle(
                     fontSize: 32,
                     foreground: Paint()
@@ -210,6 +201,7 @@ class _AbcDrawingScreenState extends State<AbcDrawingScreen> {
                 onPressed: () {
                   setState(() {
                     pointsUser.clear();
+                    said = false;
                   });
                   Navigator.of(context).pop();
                 },
