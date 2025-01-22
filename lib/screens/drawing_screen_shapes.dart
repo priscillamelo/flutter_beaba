@@ -1,7 +1,7 @@
-import 'dart:typed_data';
-import 'dart:ui' as ui;
 import 'package:flutter_beaba/components/dashed_shapes_component.dart';
 import 'package:flutter_beaba/components/drawing_dashed_component.dart';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 import 'package:flutter_beaba/components/drawing_shape_user.dart';
 import 'package:flutter_beaba/components/widget_to_image.dart';
 import 'package:image/image.dart' as img;
@@ -24,8 +24,14 @@ class _DrawingScreenState extends State<DrawingScreen> {
   late GlobalKey globalKeyTrace;
   late GlobalKey globalKeyUser;
 
-  int contList = 0;
-  final List<String> shapes = ['circulo', 'triangulo', 'quadrado', 'pentagono'];
+  int contList = 2;
+  final List<String> shapes = [
+    'circulo',
+    'triangulo',
+    'quadrado',
+    'pentagono',
+    'estrela'
+  ];
 
   @override
   void initState() {
@@ -114,25 +120,36 @@ class _DrawingScreenState extends State<DrawingScreen> {
                 ]),
               ),
               ElevatedButton(
-                  style: const ButtonStyle(
-                      padding: WidgetStatePropertyAll<EdgeInsets>(
-                          EdgeInsets.symmetric(vertical: 20, horizontal: 30))),
-                  onPressed: () async {
-                    Uint8List imageTrace = await _captureImageLetterTrace();
-                    Uint8List imageUser = await _captureImageLetterUser();
-                    setState(() {
-                      // contList++;
-                      _compareImages(imageTrace, imageUser);
-                    });
-                  },
-                  child: Text(
-                    'Proxima Forma',
-                    style: Theme.of(context).textTheme.displayMedium,
-                  )),
-              ElevatedButton(
-                onPressed: _resetGame,
-                child: const Text('Reiniciar jogo'),
-              )
+                style: const ButtonStyle(
+                    padding: WidgetStatePropertyAll<EdgeInsets>(
+                        EdgeInsets.symmetric(vertical: 20, horizontal: 30))),
+                onPressed: () async {
+                  Uint8List imageTrace = await _captureImageLetterTrace();
+                  Uint8List imageUser = await _captureImageLetterUser();
+                  setState(() {
+                    // contList++;
+                    _compareImages(imageTrace, imageUser);
+                  });
+                },
+                child: Text(
+                  'Proxima Forma',
+                  style: TextStyle(
+                    fontSize: 32,
+                    foreground: Paint()
+                      ..shader = const LinearGradient(
+                        colors: [
+                          ui.Color.fromARGB(255, 255, 3, 158),
+                          ui.Color.fromARGB(255, 255, 153, 0),
+                          ui.Color.fromARGB(255, 0, 162, 255),
+                          ui.Color.fromARGB(255, 76, 0, 255),
+                        ],
+                      ).createShader(
+                        const Rect.fromLTWH(30, 300, 400, 500),
+                      ),
+                  ),
+                  // style: Theme.of(context).textTheme.displayMedium,
+                ),
+              ),
             ],
           ),
         );

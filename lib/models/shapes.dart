@@ -23,5 +23,12 @@ class ShapesPaths {
       ..lineTo(250, 200) // ponto inferior dir
       ..lineTo(150, 200) //ponto inferior esq
       ..close(),
+    'estrela': Path()
+      ..moveTo(150, 200) //ponto inferior esq
+      ..lineTo(200, 20) //ponto superior
+      ..lineTo(250, 200) // ponto inferior dir
+      ..lineTo(100, 100) // ponto medio esq
+      ..lineTo(300, 100) // ponto medio dir
+      ..close(),
   };
 }
