@@ -37,6 +37,7 @@ class _NumbersDrawingScreenState extends State<NumbersDrawingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 123, 207, 252),
         actions: [
           IconButton(
             icon: const Icon(Icons.delete),
@@ -55,8 +56,6 @@ class _NumbersDrawingScreenState extends State<NumbersDrawingScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              /* Text('Vamos desenhar os números!',
-                  style: Theme.of(context).textTheme.headlineMedium), */
               Center(
                 child: Stack(
                   children: [
@@ -150,7 +149,7 @@ class _NumbersDrawingScreenState extends State<NumbersDrawingScreen> {
                     _showDialogImage(winner);
                   },
                   child: Text(
-                    'Próximo Número',
+                    'Verificar Número',
                     style: TextStyle(
                       fontSize: 32,
                       foreground: Paint()

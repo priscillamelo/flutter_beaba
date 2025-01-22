@@ -1,32 +1,39 @@
 import 'package:flutter_tts/flutter_tts.dart';
 
 class TextToSpeechComponent {
-  final FlutterTts _tts = FlutterTts();
-  final String language = 'pt-BR';
-  late Future<dynamic> voices;
+  static final FlutterTts _tts = FlutterTts();
+  static final String language = 'pt-BR';
 
-  TextToSpeechComponent() {
-    _initializeTts();
-  }
-
-  void _initializeTts() async {
+  static void _initializeTts() async {
     await _tts.setLanguage(language);
     await _tts.setVoice({"name": "pt-br-x-pte-local", "locale": "pt-BR"});
     await _tts.setVolume(1.0);
-    await _tts.setPitch(1.5); // Aumenta o tom, soando mais infantil
+    await _tts.setPitch(1.2); // Aumenta o tom, soando mais infantil
     await _tts.setSpeechRate(0.5);
-    voices = _tts.getVoices;
   }
 
-  Future<void> speak(String text) async {
+  static Future<void> speak(String text) async {
+    _initializeTts();
     try {
       await _tts.speak(text);
     } catch (e) {
-      print('Erro ao falar: $e');
+      throw Exception("Erro ao falar: $e");
     }
   }
 
-  void stop() async {
-    await _tts.stop();
+  static void pause() async {
+    try {
+      await _tts.pause();
+    } catch (e) {
+      throw Exception("Erro ao pausar: $e");
+    }
+  }
+
+  static void stop() async {
+    try {
+      await _tts.stop();
+    } catch (e) {
+      throw Exception("Erro ao parar: $e");
+    }
   }
 }

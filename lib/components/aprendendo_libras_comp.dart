@@ -46,23 +46,21 @@ class _AprendendoLibrasCompState extends State<AprendendoLibrasComp> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     falador = TextToSpeechComponent();
     player = AudioPlayer();
-    falador.speak('');
+    TextToSpeechComponent.speak('');
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     player.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    falador.speak('essa é a letra ${letras[index]}');
+    TextToSpeechComponent.speak('essa é a letra ${letras[index]}');
     return Center(
       child: Padding(
         padding: EdgeInsets.all(16),

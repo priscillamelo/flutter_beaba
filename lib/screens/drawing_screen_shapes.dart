@@ -1,7 +1,6 @@
-import 'package:flutter_beaba/components/dashed_shapes_component.dart';
-import 'package:flutter_beaba/components/drawing_dashed_component.dart';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'package:flutter_beaba/components/drawing_dashed_component.dart';
 import 'package:flutter_beaba/components/drawing_shape_user.dart';
 import 'package:flutter_beaba/components/widget_to_image.dart';
 import 'package:image/image.dart' as img;
@@ -224,9 +223,7 @@ class _DrawingScreenState extends State<DrawingScreen> {
     if (winner == true) {
       if (contList < shapes.length - 1) {
         setState(() {
-          print(contList);
           contList++;
-          print(contList);
 
           pointsUser.clear(); // Limpa o desenho
         });
