@@ -3,21 +3,19 @@ import 'package:flutter/material.dart';
 class DrawingUser extends CustomPainter {
   final List<Offset> points;
   final Color color;
-  final double strokeWidth;
 
-  DrawingUser(
-      {required this.points, required this.color, required this.strokeWidth});
+  DrawingUser({required this.points, required this.color});
 
   @override
   void paint(Canvas canvas, Size size) {
-    final letterPaint = Paint()
+    final paint = Paint()
       ..color = color
       ..strokeCap = StrokeCap.round
-      ..strokeWidth = strokeWidth;
+      ..strokeWidth = 20.0;
 
     for (int i = 0; i < points.length - 1; i++) {
       if (points[i] != Offset.zero && points[i + 1] != Offset.zero) {
-        canvas.drawLine(points[i], points[i + 1], letterPaint);
+        canvas.drawLine(points[i], points[i + 1], paint);
       }
     }
   }

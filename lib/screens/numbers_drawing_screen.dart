@@ -4,6 +4,8 @@ import 'package:flutter_beaba/components/drawing_dashed_component.dart';
 import 'package:flutter_beaba/components/drawing_processor_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_beaba/components/drawing_user.dart';
+import 'package:flutter_beaba/components/feedback_user.dart';
+import 'package:flutter_beaba/components/text_to_speech_component.dart';
 import 'package:flutter_beaba/components/widget_to_image.dart';
 
 class NumbersDrawingScreen extends StatefulWidget {
@@ -25,12 +27,27 @@ class _NumbersDrawingScreenState extends State<NumbersDrawingScreen> {
   int currentNumberIndex = 0;
   final List<String> numbers = List.generate(10, (index) => index.toString());
 
+  bool said = false;
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await DrawingProcessorComponent.captureImageLetterTrace(globalKeyTrace);
+      await TextToSpeechComponent.setAwaitOptions();
+      await TextToSpeechComponent.speak("Vamos desenhar os números!");
+      await _speakNumber();
     });
+  }
+
+  Future<void> _speakNumber() async {
+    if (!said) {
+      TextToSpeechComponent.speak(
+        "Desenhe o número: ${numbers[currentNumberIndex]}",
+      );
+      setState(() {
+        said = true;
+      });
+    }
   }
 
   @override
@@ -103,7 +120,6 @@ class _NumbersDrawingScreenState extends State<NumbersDrawingScreen> {
                             painter: DrawingUser(
                               points: pointsUser,
                               color: Colors.blue,
-                              strokeWidth: 10.0,
                             ),
                           ),
                         ),
@@ -136,17 +152,15 @@ class _NumbersDrawingScreenState extends State<NumbersDrawingScreen> {
                           imageTrace, imageUser);
                     });
 
-                    if (winner == true) {
-                      if (currentNumberIndex < numbers.length - 1) {
-                        setState(() {
-                          currentNumberIndex++;
-                          pointsUser.clear(); // Limpa o desenho
-                        });
-                      } else {
-                        _resetGame(); // Reinicia ao completar o alfabeto
-                      }
+                    if (context.mounted) {
+                      await FeedbackUser.checkWinner(context, winner);
+                      setState(() {
+                        pointsUser.clear();
+                        said = false;
+                      });
                     }
-                    _showDialogImage(winner);
+                    if (winner) _checkLastNumber();
+                    Future.delayed(Duration(seconds: 5), () => _speakNumber());
                   },
                   child: Text(
                     'Verificar Número',
@@ -172,31 +186,15 @@ class _NumbersDrawingScreenState extends State<NumbersDrawingScreen> {
     );
   }
 
-  // Função para mostrar o diálogo com o resultado
-  Future<void> _showDialogImage(bool winner) {
-    return showDialog<void>(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(winner
-                ? 'Parabéns! Você conseguiu!!'
-                : 'Hummm... Vamos tentar novamente!'),
-            content: Image.asset(winner
-                ? 'assets/images/winner.png'
-                : 'assets/images/loser.png'),
-            actions: [
-              TextButton(
-                child: const Text('Ok'),
-                onPressed: () {
-                  setState(() {
-                    pointsUser.clear();
-                  });
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        });
+  void _checkLastNumber() {
+    if (currentNumberIndex < numbers.length - 1) {
+      setState(() {
+        currentNumberIndex++;
+        pointsUser.clear(); // Limpa o desenho
+      });
+    } else {
+      _resetGame(); // Reinicia ao completar o alfabeto
+    }
   }
 
   // Função para reiniciar o jogo

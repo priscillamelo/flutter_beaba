@@ -38,6 +38,8 @@ flutter:
     - assets/images/word_formation/
     - assets/gifs/
     - assets/gifs/menu/
+    - assets/audios/
+
   fonts:
     - family: DynaPuff
       fonts:

@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter_beaba/components/drawing_dashed_component.dart';
-import 'package:flutter_beaba/components/drawing_shape_user.dart';
+import 'package:flutter_beaba/components/drawing_user.dart';
 import 'package:flutter_beaba/components/widget_to_image.dart';
 import 'package:image/image.dart' as img;
 import 'package:flutter/rendering.dart';
@@ -101,10 +101,9 @@ class _DrawingScreenState extends State<DrawingScreen> {
                         child: CustomPaint(
                           size: const Size(
                               400, 400), // Mesmo tamanho do CustomPaint
-                          painter: DrawingShapeUser(
+                          painter: DrawingUser(
                             points: pointsUser,
                             color: Colors.blue,
-                            strokeWidth: 10.0,
                           ),
                         ),
                       ),

@@ -19,7 +19,7 @@ class DrawingDashedComponent extends CustomPainter {
           text: letter != null ? letter! : number!,
           style: TextStyle(
             fontFamily: 'NationalFirstFontDotted',
-            fontSize: 300,
+            fontSize: letter != null ? 300 : 400,
             color: Colors.white,
           ),
         ),
@@ -30,7 +30,7 @@ class DrawingDashedComponent extends CustomPainter {
       // Centraliza o texto no canvas
       final offset = letter != null
           ? Offset(
-              (size.width - textPainter.width) / 1.8,
+              (size.width - textPainter.width) / 1.9,
               (size.height - textPainter.height) / 3,
             )
           : Offset(

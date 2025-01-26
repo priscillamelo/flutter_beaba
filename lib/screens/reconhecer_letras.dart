@@ -76,14 +76,18 @@ class _ReconhecerLetrasState extends State<ReconhecerLetras> {
       if (escolha == imagemAleatoria) {
         imagemFeedback = 'assets/images/letras_ma/acertou2.png';
         pontuacao += 10;
-        backgroundColor = const Color.fromARGB(255, 19, 199, 25); // Fundo verde no acerto
-        appBarColor = const Color.fromARGB(255, 19, 199, 25); // AppBar verde no acerto
+        backgroundColor =
+            const Color.fromARGB(255, 19, 199, 25); // Fundo verde no acerto
+        appBarColor =
+            const Color.fromARGB(255, 19, 199, 25); // AppBar verde no acerto
       } else {
         imagemFeedback = 'assets/images/letras_ma/errou2.png';
         pontuacao -= 5;
         if (pontuacao < 0) pontuacao = 0;
-        backgroundColor = const Color.fromARGB(255, 233, 32, 18); // Fundo vermelho no erro
-        appBarColor = const Color.fromARGB(255, 231, 28, 13); // AppBar vermelho no erro
+        backgroundColor =
+            const Color.fromARGB(255, 233, 32, 18); // Fundo vermelho no erro
+        appBarColor =
+            const Color.fromARGB(255, 231, 28, 13); // AppBar vermelho no erro
       }
     });
 
@@ -142,80 +146,80 @@ class _ReconhecerLetrasState extends State<ReconhecerLetras> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-  toolbarHeight: 100, // Aumenta a altura do AppBar
-  title: Text(
-    '\n Reconhecer \n     Formas',
-    style: TextStyle(
-      fontSize: 30,
-      fontFamily: 'DynaPuff',
-      fontWeight: FontWeight.bold,
-      letterSpacing: 7,
-      foreground: Paint()
-        ..shader = const LinearGradient(
-          colors: [
-            Color.fromARGB(255, 247, 237, 243),
-            Color.fromARGB(255, 248, 246, 242),
-            Color.fromARGB(255, 255, 255, 255),
-            Color.fromARGB(255, 243, 241, 247),
-          ],
-        ).createShader(
-          const Rect.fromLTWH(30, 300, 400, 500),
+        toolbarHeight: 100, // Aumenta a altura do AppBar
+        title: Text(
+          '\n Reconhecer \n     Formas',
+          style: TextStyle(
+            fontSize: 30,
+            fontFamily: 'DynaPuff',
+            fontWeight: FontWeight.bold,
+            letterSpacing: 7,
+            foreground: Paint()
+              ..shader = const LinearGradient(
+                colors: [
+                  Color.fromARGB(255, 247, 237, 243),
+                  Color.fromARGB(255, 248, 246, 242),
+                  Color.fromARGB(255, 255, 255, 255),
+                  Color.fromARGB(255, 243, 241, 247),
+                ],
+              ).createShader(
+                const Rect.fromLTWH(30, 300, 400, 500),
+              ),
+            shadows: [
+              Shadow(
+                offset: Offset(0, 0),
+                blurRadius: 10,
+                color: Colors.white.withAlpha(180), // Efeito de brilho
+              ),
+              Shadow(
+                offset: Offset(0, 3),
+                blurRadius: 10,
+                color: Colors.blue.withAlpha(150), // Brilho adicional em azul
+              ),
+            ],
+          ),
         ),
-      shadows: [
-        Shadow(
-          offset: Offset(0, 0),
-          blurRadius: 10,
-          color: Colors.white.withAlpha(180), // Efeito de brilho
-        ),
-        Shadow(
-          offset: Offset(0, 3),
-          blurRadius: 10,
-          color: Colors.blue.withAlpha(150), // Brilho adicional em azul
-        ),
-      ],
-    ),
-  ),
-  centerTitle: true,
-  backgroundColor: backgroundColor, // Sincroniza com o fundo
-),
+        centerTitle: true,
+        backgroundColor: backgroundColor, // Sincroniza com o fundo
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-            'Pontuação: $pontuacao',
-            style: TextStyle(
-              fontSize: 40,
-              fontFamily: 'DynaPuff',
-              fontWeight: FontWeight.bold,
-              letterSpacing: 2,
-              foreground: Paint()
-                ..shader = const LinearGradient(
-                  colors: [
-                    Color.fromARGB(255, 255, 98, 59),
-                    Color.fromARGB(255, 255, 184, 77),
-                    Color.fromARGB(255, 223, 252, 58),
-                    Color.fromARGB(255, 235, 255, 57),
-                  ],
-                ).createShader(
-                  const Rect.fromLTWH(20, 30, 40, 90),
-                ),
-              shadows: [
-                Shadow(
-                  offset: Offset(0, 0),
-                  blurRadius: 10,
-                  color:
-                      Colors.white.withValues(alpha: 0.7), // Efeito de brilho
-                ),
-                Shadow(
-                  offset: Offset(0, 3),
-                  blurRadius: 10,
-                  color: Colors.blue
-                      .withValues(alpha: 0.6), // Brilho adicional em azul
-                ),
-              ],
+              'Pontuação: $pontuacao',
+              style: TextStyle(
+                fontSize: 40,
+                fontFamily: 'DynaPuff',
+                fontWeight: FontWeight.bold,
+                letterSpacing: 2,
+                foreground: Paint()
+                  ..shader = const LinearGradient(
+                    colors: [
+                      Color.fromARGB(255, 255, 98, 59),
+                      Color.fromARGB(255, 255, 184, 77),
+                      Color.fromARGB(255, 223, 252, 58),
+                      Color.fromARGB(255, 235, 255, 57),
+                    ],
+                  ).createShader(
+                    const Rect.fromLTWH(20, 30, 40, 90),
+                  ),
+                shadows: [
+                  Shadow(
+                    offset: Offset(0, 0),
+                    blurRadius: 10,
+                    color:
+                        Colors.white.withValues(alpha: 0.7), // Efeito de brilho
+                  ),
+                  Shadow(
+                    offset: Offset(0, 3),
+                    blurRadius: 10,
+                    color: Colors.blue
+                        .withValues(alpha: 0.6), // Brilho adicional em azul
+                  ),
+                ],
+              ),
             ),
-          ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20),
               child: CircularCountDownTimer(
@@ -224,7 +228,7 @@ class _ReconhecerLetrasState extends State<ReconhecerLetras> {
                 controller: _countDownController,
                 width: _getSize(screenWidth, 0.2),
                 height: _getSize(screenWidth, 0.2),
-                ringColor: const Color.fromARGB(255, 123, 10, 168)!,
+                ringColor: const Color.fromARGB(255, 123, 10, 168),
                 fillColor: Colors.blue[100]!,
                 backgroundColor: Colors.blue[400],
                 strokeWidth: 10.0,

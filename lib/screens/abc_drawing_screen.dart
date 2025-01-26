@@ -1,9 +1,12 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+
+import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_beaba/components/drawing_dashed_component.dart';
 import 'package:flutter_beaba/components/drawing_processor_component.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_beaba/components/drawing_user.dart';
+import 'package:flutter_beaba/components/feedback_user.dart';
 import 'package:flutter_beaba/components/text_to_speech_component.dart';
 import 'package:flutter_beaba/components/widget_to_image.dart';
 
@@ -15,6 +18,7 @@ class AbcDrawingScreen extends StatefulWidget {
 }
 
 class _AbcDrawingScreenState extends State<AbcDrawingScreen> {
+  final AudioPlayer audioPlayer = AudioPlayer();
   final GlobalKey _paintKey = GlobalKey();
 
   List<Offset> pointsUser = [];
@@ -33,19 +37,25 @@ class _AbcDrawingScreenState extends State<AbcDrawingScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await DrawingProcessorComponent.captureImageLetterTrace(globalKeyTrace);
+      await TextToSpeechComponent.setAwaitOptions();
+      await TextToSpeechComponent.speak("Vamos desenhar o alfabeto!");
+      await _speakLetter();
     });
-    TextToSpeechComponent.speak("Vamos desenhar o alfabeto!");
   }
 
-  @override
-  Widget build(BuildContext context) {
-    if (said == false) {
+  Future<void> _speakLetter() async {
+    if (!said) {
       TextToSpeechComponent.speak(
-          "Desenha a letra: ${alphabet[currentLetterIndex]}");
+        "Desenhe a letra: ${alphabet[currentLetterIndex]}",
+      );
       setState(() {
         said = true;
       });
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 244, 235, 132),
@@ -113,7 +123,6 @@ class _AbcDrawingScreenState extends State<AbcDrawingScreen> {
                             painter: DrawingUser(
                               points: pointsUser,
                               color: Colors.blue,
-                              strokeWidth: 10.0,
                             ),
                           ),
                         ),
@@ -124,17 +133,18 @@ class _AbcDrawingScreenState extends State<AbcDrawingScreen> {
               ),
               ElevatedButton(
                 style: const ButtonStyle(
-                  side: WidgetStatePropertyAll(BorderSide(
-                    width: 2,
-                    color: Colors.black,
-                  )),
+                  side: WidgetStatePropertyAll(
+                    BorderSide(
+                      width: 2,
+                      color: Colors.black,
+                    ),
+                  ),
                   padding: WidgetStatePropertyAll<EdgeInsets>(
                     EdgeInsets.symmetric(vertical: 20, horizontal: 30),
                   ),
                 ),
                 onPressed: () async {
                   late bool winner;
-
                   Uint8List imageTrace =
                       await DrawingProcessorComponent.captureImageLetterTrace(
                           globalKeyTrace);
@@ -145,18 +155,15 @@ class _AbcDrawingScreenState extends State<AbcDrawingScreen> {
                     winner = DrawingProcessorComponent.compareImages(
                         imageTrace, imageUser);
                   });
-
-                  if (winner == true) {
-                    if (currentLetterIndex < alphabet.length - 1) {
-                      setState(() {
-                        currentLetterIndex++;
-                        pointsUser.clear(); // Limpa o desenho
-                      });
-                    } else {
-                      _resetGame(); // Reinicia ao completar o alfabeto
-                    }
+                  if (context.mounted) {
+                    await FeedbackUser.checkWinner(context, winner);
+                    setState(() {
+                      pointsUser.clear();
+                      said = false;
+                    });
                   }
-                  _showDialogImage(winner);
+                  if (winner) _checkLastLetterAlphabet();
+                  Future.delayed(Duration(seconds: 5), () => _speakLetter());
                 },
                 child: Text(
                   'Verificar letra',
@@ -183,35 +190,17 @@ class _AbcDrawingScreenState extends State<AbcDrawingScreen> {
     );
   }
 
-  // Função para mostrar o diálogo com o resultado
-  Future<void> _showDialogImage(bool winner) {
-    return showDialog<void>(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(winner
-                ? 'Parabéns! Você conseguiu!!'
-                : 'Hummm... Vamos tentar novamente!'),
-            content: Image.asset(winner
-                ? 'assets/images/winner.png'
-                : 'assets/images/loser.png'),
-            actions: [
-              TextButton(
-                child: const Text('Ok'),
-                onPressed: () {
-                  setState(() {
-                    pointsUser.clear();
-                    said = false;
-                  });
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        });
+  void _checkLastLetterAlphabet() {
+    if (currentLetterIndex < alphabet.length - 1) {
+      setState(() {
+        currentLetterIndex++;
+        pointsUser.clear(); // Limpa o desenho
+      });
+    } else {
+      _resetGame();
+    }
   }
 
-  // Função para reiniciar o jogo
   void _resetGame() {
     setState(() {
       currentLetterIndex = 0;

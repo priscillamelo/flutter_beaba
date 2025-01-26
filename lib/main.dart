@@ -13,7 +13,6 @@ import 'package:flutter_beaba/screens/reconhecer_formas.dart';
 import 'package:flutter_beaba/screens/reconhecer_letras.dart';
 import 'package:flutter_beaba/screens/reconhecer_numeros.dart';
 import 'package:flutter_beaba/screens/word_formation_screen.dart';
-import 'package:flutter_beaba/screens/show-geometrics-shapes-screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -47,24 +46,23 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: Scaffold(
-          appBar: AppBar(
-            toolbarHeight: 70,
-            backgroundColor: Color.fromARGB(255, 178, 237, 245),
-            centerTitle: true,
-            title: Image.asset(
-              'assets/images/logo.png',
-              height: 60,
-            ),
+        appBar: AppBar(
+          toolbarHeight: 70,
+          backgroundColor: Color.fromARGB(255, 178, 237, 245),
+          centerTitle: true,
+          title: Image.asset(
+            'assets/images/logo.png',
+            height: 60,
           ),
-          body: const MenuScreen()),
+        ),
+        body: const MenuScreen(),
+      ),
       routes: {
         ScreenRoutes.kMenu: (context) => const MenuScreen(),
         ScreenRoutes.kAbcDrawingScreen: (context) => const AbcDrawingScreen(),
         ScreenRoutes.kNumbersDrawingScreen: (context) =>
             const NumbersDrawingScreen(),
         ScreenRoutes.kShapesDrawingScreen: (context) => const DrawingScreen(),
-        ScreenRoutes.kShowGeometricsShapesScreen: (context) =>
-            const ShowGeometricsShapesScreen(),
         ScreenRoutes.kRecognizeLettersScreen: (context) =>
             const ReconhecerLetras(),
         ScreenRoutes.kRecognizeNumbersScreen: (context) =>

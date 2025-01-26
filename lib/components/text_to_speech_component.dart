@@ -21,6 +21,10 @@ class TextToSpeechComponent {
     }
   }
 
+  static Future<void> setAwaitOptions() async {
+    await _tts.awaitSpeakCompletion(true);
+  }
+
   static void pause() async {
     try {
       await _tts.pause();
