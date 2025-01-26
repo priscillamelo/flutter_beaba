@@ -15,27 +15,27 @@ class ReconhecerNumeroPorExtenso extends StatefulWidget {
 class _ReconhecerNumeroPorExtensoState
     extends State<ReconhecerNumeroPorExtenso> {
   final Map<int, String> numerosPorExtenso = {
-    0: 'zero',
-    1: 'um',
-    2: 'dois',
-    3: 'três',
-    4: 'quatro',
-    5: 'cinco',
-    6: 'seis',
-    7: 'sete',
-    8: 'oito',
-    9: 'nove',
-    10: 'dez',
-    11: 'onze',
-    12: 'doze',
-    13: 'treze',
-    14: 'catorze',
-    15: 'quinze',
-    16: 'dezesseis',
-    17: 'dezessete',
-    18: 'dezoito',
-    19: 'dezenove',
-    20: 'vinte',
+    0: 'Zero',
+    1: 'Um',
+    2: 'Dois',
+    3: 'Três',
+    4: 'Quatro',
+    5: 'Cinco',
+    6: 'Seis',
+    7: 'Sete',
+    8: 'Oito',
+    9: 'Nove',
+    10: 'Dez',
+    11: 'Onze',
+    12: 'Doze',
+    13: 'Treze',
+    14: 'Catorze',
+    15: 'Quinze',
+    16: 'Dezesseis',
+    17: 'Dezessete',
+    18: 'Dezoito',
+    19: 'Dezenove',
+    20: 'Vinte',
   };
 
   late int numeroAleatorio;
@@ -95,7 +95,7 @@ class _ReconhecerNumeroPorExtensoState
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
