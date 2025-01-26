@@ -49,15 +49,15 @@ class DrawingDashedComponent extends CustomPainter {
       double centerY = size.height / 3;
 
       if (shape == 'circulo') {
-        centerY = size.height / 3;
+        centerY = size.height / 3.8;
         centerX = size.width / 2.65;
       } else if (shape == 'triangulo') {
         centerX = size.width / 8;
-        centerY = size.height / 12;
+        centerY = size.height / 2000; // 12
       } else if (shape == 'quadrado') {
         centerX = size.width / 7.75;
-        centerY = size.height / 12;
-      } else if (shape == 'pentagono') {
+        centerY = size.height / 2000; //12 como tava
+      } else if (shape == 'pentagono' || shape == 'estrela') {
         centerX = size.width / 2000;
         centerY = size.height / 12;
       }

@@ -88,11 +88,12 @@ class _AprendendoLibrasCompState extends State<AprendendoLibrasComp> {
               style: TextStyle(fontSize: 16),
             ),
             Text(
-              'Tenta fazer esse sinal.',
+              'Tente fazer esse sinal.',
               style: TextStyle(fontSize: 16),
             ),
             Row(
-              spacing: 5,
+              mainAxisAlignment: MainAxisAlignment.center,
+              spacing: 20,
               children: [
                 OutlinedButton(
                     onPressed: () {
@@ -111,7 +112,7 @@ class _AprendendoLibrasCompState extends State<AprendendoLibrasComp> {
                         }
                       });
                     },
-                    child: Text('Sinal anterior')),
+                    child: Text('Voltar')),
                 FilledButton(
                   onPressed: () {
                     setState(() {
@@ -122,7 +123,7 @@ class _AprendendoLibrasCompState extends State<AprendendoLibrasComp> {
                       }
                     });
                   },
-                  child: Text('Vamos ver o proximo sinal.'),
+                  child: Text('Proximo sinal'),
                 ),
               ],
             )
