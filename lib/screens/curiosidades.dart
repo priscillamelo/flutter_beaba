@@ -83,6 +83,7 @@ class _CuriosidadesScreenState extends State<CuriosidadesScreen> {
                 color: Colors.white,
                 fontSize: 28.0,
                 fontWeight: FontWeight.bold,
+                letterSpacing: 3,
               ),
             ),
           ],

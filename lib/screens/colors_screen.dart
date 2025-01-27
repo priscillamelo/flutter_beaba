@@ -1,78 +1,82 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter_beaba/components/color_matching.dart';
+import 'dart:math';
+import 'package:flutter_beaba/components/text_to_speech_component.dart';
+import 'package:flutter_beaba/models/colors_matching.dart';
 
-class TelaCombinacaoCores extends StatefulWidget {
-  const TelaCombinacaoCores({super.key});
+class ColorMatchingScreen extends StatefulWidget {
+  const ColorMatchingScreen({super.key});
 
   @override
-  State<TelaCombinacaoCores> createState() => _TelaCombinacaoCoresState();
+  State<ColorMatchingScreen> createState() => _ColorMatchingScreenState();
 }
 
-class _TelaCombinacaoCoresState extends State<TelaCombinacaoCores> {
-  List<Widget> combinacoes = [
-    const ColorMatching(),
-    const Combinacao2(),
-    const Combinacao3(),
-    const Combinacao4(),
-    const Combinacao5(),
-    const Combinacao6(),
-    const Combinacao7(),
-    const Combinacao8(),
-    const Combinacao9(),
-  ];
-  int combinacao = Random().nextInt(9);
-
+class _ColorMatchingScreenState extends State<ColorMatchingScreen> {
+  late int combinacao;
   @override
   void initState() {
     super.initState();
+    combinacao = Random().nextInt(combinacoes.length);
+    TextToSpeechComponent.speak("Descubra as combinações das cores!");
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 255, 231, 172),
-        title: const Text('Combinações das cores'),
+        backgroundColor: const Color.fromARGB(255, 255, 231, 172),
+        title: const Text(
+          'COMBINAÇÕES DAS CORES',
+          style: TextStyle(
+            letterSpacing: 3,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
           return Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Color.fromARGB(255, 255, 231, 172),
-              // image: DecorationImage(
-              //   image: AssetImage(
-              //       'assets/images/backgrounds/descobrir_comb_cores_bg_certa.png'),
-              //   // alignment: Alignment.topCenter,
-              //   fit: BoxFit.fitHeight,
-              //   alignment: Alignment.topCenter,
-              // ),
             ),
             child: Center(
               child: Padding(
                 padding: const EdgeInsets.all(8),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     const Text(
                       'Descubra a combinação dessas cores',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 28),
-                    ),
-                    const SizedBox(
-                      height: 30,
+                      style: TextStyle(fontSize: 30),
                     ),
                     combinacoes[combinacao],
-                    const SizedBox(
-                      height: 30,
-                    ),
                     ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 16, horizontal: 24),
+                      ),
                       onPressed: () {
                         setState(() {
-                          combinacao = Random().nextInt(9);
+                          combinacao = Random().nextInt(combinacoes.length);
                         });
                       },
-                      child: const Text('Ver outra combinação'),
+                      child: ShaderMask(
+                        shaderCallback: (Rect bounds) {
+                          return const LinearGradient(
+                            colors: [
+                              Color.fromARGB(255, 255, 3, 158),
+                              Color.fromARGB(255, 255, 153, 0),
+                              Color.fromARGB(255, 0, 162, 255),
+                              Color.fromARGB(255, 76, 0, 255),
+                            ],
+                          ).createShader(bounds);
+                        },
+                        child: const Text(
+                          'Ver outra combinação',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 30, color: Colors.white),
+                        ),
+                      ),
                     ),
                   ],
                 ),

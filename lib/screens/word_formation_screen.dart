@@ -1,5 +1,7 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_beaba/components/container_component.dart';
+import 'package:flutter_beaba/components/feedback_user.dart';
 import 'package:flutter_beaba/components/text_to_speech_component.dart';
 import 'dart:math';
 import 'package:flutter_beaba/models/word_formation.dart';
@@ -19,6 +21,7 @@ class _WordFormationScreenState extends State<WordFormationScreen> {
   List<String> listWordsCopy = [];
   List<String> letters = [];
   List<String?> slots = [];
+  final AudioPlayer audioPlayer = AudioPlayer();
 
   @override
   void initState() {
@@ -50,18 +53,15 @@ class _WordFormationScreenState extends State<WordFormationScreen> {
     } while (listWordsCopy.contains(chosenWord));
   }
 
-  void checkIfWordIsCorrect() {
+  void checkIfWordIsCorrect() async {
     late String feedbackMessage;
     late String feedbackTitle;
-    late String textButton;
 
     if (slots.join('') == chosenWord) {
-      TextToSpeechComponent.speak(
-          "Parabéns! Você formou a palavra $chosenWord corretamente!");
+      audioPlayer.play(AssetSource('audios/feedback-winner.m4a'));
 
       feedbackTitle = "Parabéns!";
       feedbackMessage = "Você formou a palavra corretamente! 🎉";
-      textButton = "Próxima rodada";
       listWordsCopy.add(chosenWord);
 
       if (listWordsCopy.length == listWords.length) {
@@ -69,29 +69,18 @@ class _WordFormationScreenState extends State<WordFormationScreen> {
         level++;
       }
     } else {
+      audioPlayer.play(AssetSource('audios/feedback-lose.m4a'));
       TextToSpeechComponent.speak(
-          "Humm... Você não acertou. Vamos tentar outra palavra?");
-      feedbackTitle = "Humm...";
-      feedbackMessage = "Você não acertou. Vamos tentar outra palavra?";
-      textButton = "Jogar novamente";
+          "Você não acertou. Vamos tentar outra palavra.");
+      feedbackTitle = "Ahhh...";
+      feedbackMessage = "Você não acertou. Vamos tentar outra palavra.";
     }
 
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
+    await FeedbackUser.showDialogFeedback(
+        context: context,
         title: Text(feedbackTitle),
-        content: Text(feedbackMessage),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              startGame();
-            },
-            child: Text(textButton),
-          ),
-        ],
-      ),
-    );
+        content: Text(feedbackMessage));
+    startGame();
   }
 
   @override

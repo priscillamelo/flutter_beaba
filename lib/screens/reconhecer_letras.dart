@@ -1,7 +1,8 @@
-import 'package:circular_countdown_timer/circular_countdown_timer.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+import 'package:flutter_beaba/components/feedback_user.dart';
 
 class ReconhecerLetras extends StatefulWidget {
   const ReconhecerLetras({super.key});
@@ -10,7 +11,8 @@ class ReconhecerLetras extends StatefulWidget {
   State<ReconhecerLetras> createState() => _ReconhecerLetrasState();
 }
 
-class _ReconhecerLetrasState extends State<ReconhecerLetras> {
+class _ReconhecerLetrasState extends State<ReconhecerLetras>
+    with SingleTickerProviderStateMixin {
   final List<String> letras = [
     'a.png',
     'b.png',
@@ -38,56 +40,71 @@ class _ReconhecerLetrasState extends State<ReconhecerLetras> {
     'w.png',
     'y.png'
   ];
+  late AnimationController animationController;
+  late Animation<double> animation;
 
   late String imagemAleatoria;
   late List<String> segundaLinha;
-  String imagemFeedback = '';
   int pontuacao = 0;
+  Color backgroundColor = Colors.blue.shade600;
 
   final CountDownController _countDownController = CountDownController();
-  Color backgroundColor = Colors.blue.shade600; // Cor inicial do fundo
-  Color appBarColor = Colors.blue.shade600; // Cor inicial do AppBar
 
+  final AudioPlayer audioPlayer = AudioPlayer();
   @override
   void initState() {
     super.initState();
+    animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
+
+    animation = FeedbackUser.createAnimationShakeScreen(animationController);
+
     _inicializarJogo();
+  }
+
+  void _shakeScreen() async {
+    animationController
+      ..reset()
+      ..forward();
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
   }
 
   void _inicializarJogo() {
     setState(() {
       imagemAleatoria = letras[Random().nextInt(letras.length)];
       segundaLinha = [imagemAleatoria];
-      while (segundaLinha.length < 4) {
+      while (segundaLinha.length < 3) {
         String imagem = letras[Random().nextInt(letras.length)];
         if (!segundaLinha.contains(imagem)) {
           segundaLinha.add(imagem);
         }
       }
       segundaLinha.shuffle();
-      imagemFeedback = '';
-      backgroundColor = Colors.blue.shade600; // Reseta cor de fundo
-      appBarColor = Colors.blue.shade600; // Reseta cor do AppBar
+      backgroundColor = Colors.blue.shade600;
     });
   }
 
   void validarEscolha(String escolha) {
+    bool correctAsnwer = escolha == imagemAleatoria;
+    FeedbackUser.feedbackRecognize(correctAsnwer);
     setState(() {
-      if (escolha == imagemAleatoria) {
-        imagemFeedback = 'assets/images/letras_ma/acertou2.png';
+      if (correctAsnwer) {
         pontuacao += 10;
-        backgroundColor =
-            const Color.fromARGB(255, 19, 199, 25); // Fundo verde no acerto
-        appBarColor =
-            const Color.fromARGB(255, 19, 199, 25); // AppBar verde no acerto
+        setState(() {
+          backgroundColor = Color.fromARGB(255, 19, 199, 25);
+        });
       } else {
-        imagemFeedback = 'assets/images/letras_ma/errou2.png';
+        _shakeScreen();
         pontuacao -= 5;
         if (pontuacao < 0) pontuacao = 0;
-        backgroundColor =
-            const Color.fromARGB(255, 233, 32, 18); // Fundo vermelho no erro
-        appBarColor =
-            const Color.fromARGB(255, 231, 28, 13); // AppBar vermelho no erro
+        backgroundColor = Color.fromARGB(255, 233, 32, 18);
       }
     });
 
@@ -101,17 +118,15 @@ class _ReconhecerLetrasState extends State<ReconhecerLetras> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(
-            "Fim do Jogo!",
-            style: GoogleFonts.ubuntuMono(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Colors.blue,
-            ),
-          ),
+          title: Text("Fim do Jogo!",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.blue,
+              )),
           content: Text(
             "Sua pontuação final é $pontuacao.",
-            style: GoogleFonts.ubuntuMono(fontSize: 18),
+            style: TextStyle(fontSize: 18),
           ),
           actions: [
             TextButton(
@@ -126,10 +141,8 @@ class _ReconhecerLetrasState extends State<ReconhecerLetras> {
               child: const Text("Jogar Novamente"),
             ),
             TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.pop(context);
-              },
+              onPressed: () =>
+                  Navigator.popUntil(context, ModalRoute.withName("/")),
               child: const Text("Sair"),
             ),
           ],
@@ -151,7 +164,6 @@ class _ReconhecerLetrasState extends State<ReconhecerLetras> {
           '\n Reconhecer \n     Formas',
           style: TextStyle(
             fontSize: 30,
-            fontFamily: 'DynaPuff',
             fontWeight: FontWeight.bold,
             letterSpacing: 7,
             foreground: Paint()
@@ -182,85 +194,93 @@ class _ReconhecerLetrasState extends State<ReconhecerLetras> {
         centerTitle: true,
         backgroundColor: backgroundColor, // Sincroniza com o fundo
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Pontuação: $pontuacao',
-              style: TextStyle(
-                fontSize: 40,
-                fontFamily: 'DynaPuff',
-                fontWeight: FontWeight.bold,
-                letterSpacing: 2,
-                foreground: Paint()
-                  ..shader = const LinearGradient(
-                    colors: [
-                      Color.fromARGB(255, 255, 98, 59),
-                      Color.fromARGB(255, 255, 184, 77),
-                      Color.fromARGB(255, 223, 252, 58),
-                      Color.fromARGB(255, 235, 255, 57),
-                    ],
-                  ).createShader(
-                    const Rect.fromLTWH(20, 30, 40, 90),
-                  ),
-                shadows: [
-                  Shadow(
-                    offset: Offset(0, 0),
-                    blurRadius: 10,
-                    color:
-                        Colors.white.withValues(alpha: 0.7), // Efeito de brilho
-                  ),
-                  Shadow(
-                    offset: Offset(0, 3),
-                    blurRadius: 10,
-                    color: Colors.blue
-                        .withValues(alpha: 0.6), // Brilho adicional em azul
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: CircularCountDownTimer(
-                duration: 20,
-                initialDuration: 0,
-                controller: _countDownController,
-                width: _getSize(screenWidth, 0.2),
-                height: _getSize(screenWidth, 0.2),
-                ringColor: const Color.fromARGB(255, 123, 10, 168),
-                fillColor: Colors.blue[100]!,
-                backgroundColor: Colors.blue[400],
-                strokeWidth: 10.0,
-                strokeCap: StrokeCap.round,
-                textStyle: TextStyle(
-                  fontSize: _getTextSize(screenWidth, 0.05),
-                  color: Colors.white,
+      body: AnimatedBuilder(
+        animation: animation,
+        builder: (context, child) {
+          return Transform.translate(
+            offset: Offset(animation.value, 0),
+            child: child,
+          );
+        },
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Text(
+                'Pontuação: $pontuacao',
+                style: TextStyle(
+                  fontSize: 40,
                   fontWeight: FontWeight.bold,
+                  letterSpacing: 2,
+                  foreground: Paint()
+                    ..shader = const LinearGradient(
+                      colors: [
+                        Color.fromARGB(255, 255, 98, 59),
+                        Color.fromARGB(255, 255, 184, 77),
+                        Color.fromARGB(255, 223, 252, 58),
+                        Color.fromARGB(255, 235, 255, 57),
+                      ],
+                    ).createShader(
+                      const Rect.fromLTWH(20, 30, 40, 90),
+                    ),
+                  shadows: [
+                    Shadow(
+                      offset: Offset(0, 0),
+                      blurRadius: 10,
+                      color: Colors.white
+                          .withValues(alpha: 0.7), // Efeito de brilho
+                    ),
+                    Shadow(
+                      offset: Offset(0, 3),
+                      blurRadius: 10,
+                      color: Colors.blue
+                          .withValues(alpha: 0.6), // Brilho adicional em azul
+                    ),
+                  ],
                 ),
-                isReverse: true,
-                onComplete: _mostrarFimDoJogo,
               ),
-            ),
-            Image.asset(
-              'assets/images/letras_ma/$imagemAleatoria',
-              width: _getSize(screenWidth, 0.4),
-              height: _getSize(screenHeight, 0.3),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: segundaLinha.map((imagem) {
-                return ElevatedButton(
-                  onPressed: () => validarEscolha(imagem),
-                  child: Image.asset(
-                    'assets/images/letras_mi/$imagem',
-                    width: _getSize(screenWidth, 0.1),
-                    height: _getSize(screenHeight, 0.1),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: CircularCountDownTimer(
+                  duration: 20,
+                  initialDuration: 0,
+                  controller: _countDownController,
+                  width: _getSize(screenWidth, 0.25),
+                  height: _getSize(screenWidth, 0.25),
+                  ringColor: const Color.fromARGB(255, 123, 10, 168),
+                  fillColor: Colors.blue[100]!,
+                  backgroundColor: Colors.blue[400],
+                  strokeWidth: 10.0,
+                  strokeCap: StrokeCap.round,
+                  textStyle: TextStyle(
+                    fontSize: _getTextSize(screenWidth, 0.12),
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
                   ),
-                );
-              }).toList(),
-            ),
-          ],
+                  isReverse: true,
+                  onComplete: _mostrarFimDoJogo,
+                ),
+              ),
+              Image.asset(
+                'assets/images/letras_ma/$imagemAleatoria',
+                width: _getSize(screenWidth, 0.4),
+                height: _getSize(screenHeight, 0.3),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: segundaLinha.map((imagem) {
+                  return ElevatedButton(
+                    onPressed: () => validarEscolha(imagem),
+                    child: Image.asset(
+                      'assets/images/letras_mi/$imagem',
+                      width: _getSize(screenWidth, 0.16),
+                      height: _getSize(screenHeight, 0.12),
+                    ),
+                  );
+                }).toList(),
+              ),
+            ],
+          ),
         ),
       ),
     );

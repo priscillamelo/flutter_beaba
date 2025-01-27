@@ -1,11 +1,12 @@
+import 'package:flutter/material.dart';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter_beaba/components/drawing_dashed_component.dart';
+import 'package:flutter_beaba/components/drawing_processor_component.dart';
 import 'package:flutter_beaba/components/drawing_user.dart';
 import 'package:flutter_beaba/components/widget_to_image.dart';
-import 'package:image/image.dart' as img;
-import 'package:flutter/rendering.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_beaba/components/text_to_speech_component.dart';
+import 'package:flutter_beaba/components/feedback_user.dart';
 
 class DrawingScreen extends StatefulWidget {
   const DrawingScreen({super.key});
@@ -22,6 +23,7 @@ class _DrawingScreenState extends State<DrawingScreen> {
 
   late GlobalKey globalKeyTrace;
   late GlobalKey globalKeyUser;
+  bool said = false;
 
   int contList = 2;
   final List<String> shapes = [
@@ -31,13 +33,37 @@ class _DrawingScreenState extends State<DrawingScreen> {
     'pentagono',
     'estrela'
   ];
+  final Map<String, String> shapesGenders = {
+    'círculo': 'o',
+    'triângulo': 'o',
+    'quadrado': 'o',
+    'pentágono': 'o',
+    'estrela': 'a',
+  };
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _captureImageLetterTrace();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await DrawingProcessorComponent.captureImageLetterTrace(globalKeyTrace);
+      await TextToSpeechComponent.setAwaitOptions();
+      await TextToSpeechComponent.speak(
+          "Vamos desenhar as formas geométricas!");
+      await _speakLetter();
     });
+  }
+
+  Future<void> _speakLetter() async {
+    String shape = shapesGenders.keys.elementAt(contList);
+    String article = shapesGenders.values.elementAt(contList);
+    if (!said) {
+      TextToSpeechComponent.speak(
+        "Desenhe $article $shape",
+      );
+      setState(() {
+        said = true;
+      });
+    }
   }
 
   @override
@@ -46,8 +72,12 @@ class _DrawingScreenState extends State<DrawingScreen> {
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 225, 247, 152),
         title: Text(
-          'Formas',
-          style: Theme.of(context).textTheme.headlineMedium,
+          'FORMAS GEOMÉTRICAS',
+          style: TextStyle(
+            letterSpacing: 3,
+            fontSize: 26,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
       body: LayoutBuilder(builder: (context, constraints) {
@@ -61,12 +91,8 @@ class _DrawingScreenState extends State<DrawingScreen> {
                 // fit: BoxFit.fitWidth
               )),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Text(
-                'Vamos desenhas as formas!',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
               Center(
                 child: Stack(children: [
                   // Exibe a forma tracejada que a criança deve desenhar
@@ -105,8 +131,7 @@ class _DrawingScreenState extends State<DrawingScreen> {
                       },
                       child: Center(
                         child: CustomPaint(
-                          size: const Size(
-                              400, 400), // Mesmo tamanho do CustomPaint
+                          size: const Size(400, 400),
                           painter: DrawingUser(
                             points: pointsUser,
                             color: Colors.blue,
@@ -122,15 +147,48 @@ class _DrawingScreenState extends State<DrawingScreen> {
                     padding: WidgetStatePropertyAll<EdgeInsets>(
                         EdgeInsets.symmetric(vertical: 20, horizontal: 30))),
                 onPressed: () async {
-                  Uint8List imageTrace = await _captureImageLetterTrace();
-                  Uint8List imageUser = await _captureImageLetterUser();
+                  late bool winner;
+
+                  Uint8List imageTrace =
+                      await DrawingProcessorComponent.captureImageLetterTrace(
+                          globalKeyTrace);
+                  Uint8List imageUser =
+                      await DrawingProcessorComponent.captureImageLetterUser(
+                          globalKeyUser);
                   setState(() {
-                    // contList++;
-                    _compareImages(imageTrace, imageUser);
+                    winner = DrawingProcessorComponent.compareImages(
+                        imageTrace, imageUser);
                   });
+
+                  if (context.mounted) {
+                    await FeedbackUser.feedbackDrawing(
+                        context: context, winner: winner);
+                  }
+                  if (context.mounted) {
+                    late String title;
+                    late String content;
+                    if (winner) {
+                      title = "Parabéns, você acertou!";
+                      content = 'assets/images/winner.png';
+                    } else {
+                      title = "Humm, vamos tentar novamente!";
+                      content = 'assets/images/loser.png';
+                    }
+                    await FeedbackUser.showDialogFeedback(
+                      context: context,
+                      title: Text(title),
+                      content: Image.asset(content),
+                    );
+                  }
+                  setState(() {
+                    pointsUser.clear();
+                    said = false;
+                  });
+                  if (winner) _checkLastShapeGeometric();
+                  _speakLetter();
                 },
                 child: Text(
-                  'Proxima Forma',
+                  'Verificar Forma',
                   style: TextStyle(
                     fontSize: 32,
                     foreground: Paint()
@@ -155,108 +213,15 @@ class _DrawingScreenState extends State<DrawingScreen> {
     );
   }
 
-  Future<Uint8List> _captureImageLetterTrace() async {
-    RenderRepaintBoundary? boundary = globalKeyTrace.currentContext
-        ?.findRenderObject() as RenderRepaintBoundary?;
-    ui.Image image = await boundary!.toImage();
-
-    final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-    Uint8List? pngBytes = byteData?.buffer.asUint8List();
-
-    return pngBytes!;
-  }
-
-  Future<Uint8List> _captureImageLetterUser() async {
-    RenderRepaintBoundary? boundary = globalKeyUser.currentContext
-        ?.findRenderObject() as RenderRepaintBoundary?;
-    ui.Image image = await boundary!.toImage();
-
-    final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-    Uint8List? pngBytes = byteData?.buffer.asUint8List();
-
-    return pngBytes!;
-  }
-
-  void _compareImages(Uint8List imageTrace, Uint8List imageUser) async {
-    img.Image? imgTrace = img.decodeImage(imageTrace);
-    img.Image? imgUser = img.decodeImage(imageUser);
-
-    if (imgTrace == null || imgUser == null) {
-      throw Exception('Erro: Falha ao decodificar uma ou ambas as imagens.');
+  void _checkLastShapeGeometric() {
+    if (contList < shapes.length - 1) {
+      setState(() {
+        contList++;
+        pointsUser.clear(); // Limpa o desenho
+      });
+    } else {
+      _resetGame(); // Reinicia ao completar as formas
     }
-
-    // Calcula os pixels cobertos
-    int totalPixels1 = 0;
-    int totalPixels2 = 0;
-    int coveredPixels = 0;
-
-    for (int y = 0; y < imgUser.height; y++) {
-      for (int x = 0; x < imgUser.width; x++) {
-        img.Pixel pixelTrace = imgTrace.getPixelSafe(x, y);
-        img.Pixel pixelUser = imgUser.getPixelSafe(x, y);
-
-        if (pixelUser.b > 0) {
-          totalPixels2++;
-          //coveredPixels++;
-        }
-
-        // Verifica se o pixel faz parte da letra (cor vermelha, por exemplo)
-        if (pixelTrace.r > 0) {
-          totalPixels1++;
-
-          // talvez aq de pra consertar o bug
-          // Verifica se o pixel foi coberto (cor do usuário não é transparente)
-          if (pixelUser.a > 0) {
-            // totalPixels2++;
-            coveredPixels++;
-          }
-        }
-      }
-    }
-
-    // Calcula a porcentagem de cobertura
-    final newCoveragePercentage = (coveredPixels / totalPixels1) * 100;
-    bool winner =
-        newCoveragePercentage > 40; // && totalPixels2 < totalPixels1 * 3;
-
-    if (winner == true) {
-      if (contList < shapes.length - 1) {
-        setState(() {
-          contList++;
-
-          pointsUser.clear(); // Limpa o desenho
-        });
-      } else {
-        _resetGame(); // Reinicia ao completar as formas
-      }
-    }
-    _showDialogImage(winner);
-  }
-
-  Future<void> _showDialogImage(bool winner) {
-    return showDialog<void>(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(winner
-                ? 'Parabéns! Você conseguiu!!'
-                : 'Hummm... Vamos tentar novamente!'),
-            content: Image.asset(winner
-                ? 'assets/images/winner.png'
-                : 'assets/images/loser.png'),
-            actions: [
-              TextButton(
-                child: const Text('Ok'),
-                onPressed: () {
-                  setState(() {
-                    pointsUser.clear();
-                  });
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        });
   }
 
   void _resetGame() {

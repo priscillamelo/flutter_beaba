@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_beaba/components/menu_button_component.dart';
+import 'package:flutter_beaba/components/text_to_speech_component.dart';
 import 'package:flutter_beaba/models/shapes_buttons_menu.dart';
 import 'package:flutter_beaba/routes/screen_routes.dart';
 
@@ -9,6 +10,15 @@ class MenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 70,
+        backgroundColor: Color.fromARGB(255, 178, 237, 245),
+        centerTitle: true,
+        title: Image.asset(
+          'assets/images/logo.png',
+          height: 60,
+        ),
+      ),
       body: Stack(children: [
         Image.asset(
           'assets/images/backgrounds/menu-background.jpg',
@@ -33,6 +43,7 @@ class _MenuWidgetState extends State<MenuWidget> {
   @override
   void initState() {
     super.initState();
+    TextToSpeechComponent.speak("Hora de aprender!");
   }
 
   @override
@@ -42,12 +53,13 @@ class _MenuWidgetState extends State<MenuWidget> {
       child: Column(
         children: [
           Text(
-            'Hora de Aprender!',
+            'HORA DE APRENDER',
+            textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 35,
               fontFamily: 'DynaPuff',
               fontWeight: FontWeight.bold,
-              letterSpacing: 2,
+              letterSpacing: 3,
               foreground: Paint()
                 ..shader = const LinearGradient(
                   colors: [

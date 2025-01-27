@@ -1,8 +1,7 @@
-// import 'dart:math';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'dart:math';
+import 'package:flutter_beaba/components/feedback_user.dart';
+import 'package:flutter_beaba/components/text_to_speech_component.dart';
 
 class ReconhecerNumeroPorExtenso extends StatefulWidget {
   const ReconhecerNumeroPorExtenso({super.key});
@@ -49,14 +48,13 @@ class _ReconhecerNumeroPorExtensoState
       numeroAleatorio,
       Random().nextInt(20),
       Random().nextInt(20),
-      Random().nextInt(20)
     ];
     opcoes.shuffle();
   }
 
   void gerarNovoNumero() {
     setState(() {
-      for (var i = 0; i < 4; i++) {
+      for (var i = 0; i < opcoes.length; i++) {
         numeroAleatorio = Random().nextInt(20);
         opcoes[i] = numeroAleatorio;
       }
@@ -64,133 +62,84 @@ class _ReconhecerNumeroPorExtensoState
     });
   }
 
+  Future<void> _speakLetter() async {
+    TextToSpeechComponent.speak(
+      "Qual é o número: $numeroAleatorio",
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    _speakLetter();
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 141, 255, 133),
-          title: const Text('Identifique os números'),
-        ),
-        body: LayoutBuilder(
-          builder: (context, constraints) {
-            return Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color.fromARGB(255, 141, 255, 133),
-                      Color.fromARGB(100, 59, 248, 247)
-                    ]),
-                image: DecorationImage(
-                    image: AssetImage(
-                      'assets/images/backgrounds/reconhecer_numeros_bg_certa.png',
-                    ),
-                    alignment: Alignment.topCenter,
-                    fit: BoxFit.cover),
-              ),
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 141, 255, 133),
+        title: const Text('QUAL É O NÚMERO?'),
+      ),
+      body: LayoutBuilder(builder: (context, constraints) {
+        return Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color.fromARGB(255, 141, 255, 133),
+                  Color.fromARGB(100, 59, 248, 247)
+                ]),
+            image: DecorationImage(
+                image: AssetImage(
+                    'assets/images/backgrounds/reconhecer_numeros_bg_certa.png'),
+                fit: BoxFit.fill),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          '${numerosPorExtenso[numeroAleatorio]}',
-                          style: TextStyle(
-                            fontSize: 70,
-                          ),
-                        ),
-                        const SizedBox(height: 50),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          spacing: 16,
-                          children: [
-                            // Text('${opcoes.length}')
-                            FilledButton(
-                                style: ButtonStyle(
-                                    minimumSize:
-                                        WidgetStatePropertyAll(Size(60, 60))),
-                                onPressed: () {
-                                  if (opcoes[0] == numeroAleatorio) {
-                                    gerarNovoNumero();
-                                    Fluttertoast.showToast(
-                                        msg: 'Parabens, você acertou');
-                                  } else {
-                                    Fluttertoast.showToast(
-                                        msg: 'Que pena, você errou');
-                                  }
-                                },
-                                child: Text(
-                                  '${opcoes[0]}',
-                                  style: TextStyle(fontSize: 32),
-                                )),
-                            FilledButton(
-                                style: ButtonStyle(
-                                    minimumSize:
-                                        WidgetStatePropertyAll(Size(60, 60))),
-                                onPressed: () {
-                                  if (opcoes[1] == numeroAleatorio) {
-                                    gerarNovoNumero();
-                                    Fluttertoast.showToast(
-                                        msg: 'Parabens, você acertou');
-                                  } else {
-                                    Fluttertoast.showToast(
-                                        msg: 'Que pena, você errou');
-                                  }
-                                },
-                                child: Text(
-                                  '${opcoes[1]}',
-                                  style: TextStyle(fontSize: 32),
-                                )),
-                            FilledButton(
-                                style: ButtonStyle(
-                                    minimumSize:
-                                        WidgetStatePropertyAll(Size(60, 60))),
-                                onPressed: () {
-                                  if (opcoes[2] == numeroAleatorio) {
-                                    gerarNovoNumero();
-                                    Fluttertoast.showToast(
-                                        msg: 'Parabens, você acertou');
-                                  } else {
-                                    Fluttertoast.showToast(
-                                        msg: 'Que pena, você errou');
-                                  }
-                                },
-                                child: Text(
-                                  '${opcoes[2]}',
-                                  style: TextStyle(fontSize: 32),
-                                )),
-                            FilledButton(
-                                style: ButtonStyle(
-                                    minimumSize:
-                                        WidgetStatePropertyAll(Size(60, 60))),
-                                onPressed: () {
-                                  if (opcoes[3] == numeroAleatorio) {
-                                    gerarNovoNumero();
-                                    Fluttertoast.showToast(
-                                        msg: 'Parabens, você acertou');
-                                  } else {
-                                    Fluttertoast.showToast(
-                                        msg: 'Que pena, você errou');
-                                  }
-                                },
-                                child: Text(
-                                  '${opcoes[3]}',
-                                  style: TextStyle(fontSize: 32),
-                                )),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+                padding: const EdgeInsets.only(
+                  top: 16,
+                  right: 16.0,
+                  left: 16.0,
+                  bottom: 40,
                 ),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        '${numerosPorExtenso[numeroAleatorio]}',
+                        style: TextStyle(
+                          fontSize: 52,
+                        ),
+                      ),
+                      Spacer(flex: 1),
+                      Wrap(
+                        spacing: 24,
+                        children: opcoes
+                            .map((number) => FilledButton(
+                                  style: ButtonStyle(
+                                    minimumSize: WidgetStatePropertyAll(
+                                      Size(90, 100),
+                                    ),
+                                  ),
+                                  onPressed: () async {
+                                    bool isCorrect = number == numeroAleatorio;
+                                    await FeedbackUser.feedbackRecognize(
+                                        isCorrect);
+
+                                    if (isCorrect) gerarNovoNumero();
+                                  },
+                                  child: Text(
+                                    '$number',
+                                    style: TextStyle(fontSize: 40),
+                                  ),
+                                ))
+                            .toList(),
+                      ),
+                    ]),
               ),
-            );
-          },
-        ));
+            ),
+          ),
+        );
+      }),
+    );
   }
 }

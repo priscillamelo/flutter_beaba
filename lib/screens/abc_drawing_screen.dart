@@ -1,14 +1,12 @@
+import 'package:flutter/material.dart';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-
-import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_beaba/components/drawing_dashed_component.dart';
 import 'package:flutter_beaba/components/drawing_processor_component.dart';
 import 'package:flutter_beaba/components/drawing_user.dart';
-import 'package:flutter_beaba/components/feedback_user.dart';
-import 'package:flutter_beaba/components/text_to_speech_component.dart';
 import 'package:flutter_beaba/components/widget_to_image.dart';
+import 'package:flutter_beaba/components/text_to_speech_component.dart';
+import 'package:flutter_beaba/components/feedback_user.dart';
 
 class AbcDrawingScreen extends StatefulWidget {
   const AbcDrawingScreen({super.key});
@@ -18,7 +16,6 @@ class AbcDrawingScreen extends StatefulWidget {
 }
 
 class _AbcDrawingScreenState extends State<AbcDrawingScreen> {
-  final AudioPlayer audioPlayer = AudioPlayer();
   final GlobalKey _paintKey = GlobalKey();
 
   List<Offset> pointsUser = [];
@@ -39,7 +36,7 @@ class _AbcDrawingScreenState extends State<AbcDrawingScreen> {
       await DrawingProcessorComponent.captureImageLetterTrace(globalKeyTrace);
       await TextToSpeechComponent.setAwaitOptions();
       await TextToSpeechComponent.speak("Vamos desenhar o alfabeto!");
-      await _speakLetter();
+      _speakLetter();
     });
   }
 
@@ -59,6 +56,14 @@ class _AbcDrawingScreenState extends State<AbcDrawingScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 244, 235, 132),
+        title: Text(
+          "ALFABETO",
+          style: TextStyle(
+            letterSpacing: 3,
+            fontSize: 30,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.delete),
@@ -156,14 +161,32 @@ class _AbcDrawingScreenState extends State<AbcDrawingScreen> {
                         imageTrace, imageUser);
                   });
                   if (context.mounted) {
-                    await FeedbackUser.checkWinner(context, winner);
-                    setState(() {
-                      pointsUser.clear();
-                      said = false;
-                    });
+                    await FeedbackUser.feedbackDrawing(
+                        context: context, winner: winner);
                   }
+                  if (context.mounted) {
+                    late String title;
+                    late String content;
+                    if (winner) {
+                      title = "Parabéns, você acertou!";
+                      content = 'assets/images/winner.png';
+                    } else {
+                      title = "Humm, vamos tentar novamente!";
+                      content = 'assets/images/loser.png';
+                    }
+                    await FeedbackUser.showDialogFeedback(
+                      context: context,
+                      title: Text(title),
+                      content: Image.asset(content),
+                    );
+                  }
+                  setState(() {
+                    pointsUser.clear();
+                    said = false;
+                  });
+
                   if (winner) _checkLastLetterAlphabet();
-                  Future.delayed(Duration(seconds: 5), () => _speakLetter());
+                  _speakLetter();
                 },
                 child: Text(
                   'Verificar letra',

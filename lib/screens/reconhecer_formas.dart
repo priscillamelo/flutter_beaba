@@ -1,7 +1,7 @@
-import 'package:circular_countdown_timer/circular_countdown_timer.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter/material.dart';
 import 'dart:math';
+
+import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+import 'package:flutter/material.dart';
 
 class ReconhecerFormas extends StatefulWidget {
   const ReconhecerFormas({super.key});
@@ -81,7 +81,7 @@ class _ReconhecerFormasState extends State<ReconhecerFormas> {
         return AlertDialog(
           title: Text(
             "Fim do Jogo!",
-            style: GoogleFonts.ubuntuMono(
+            style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
               color: Colors.blue,
@@ -89,7 +89,7 @@ class _ReconhecerFormasState extends State<ReconhecerFormas> {
           ),
           content: Text(
             "Sua pontuação final é $pontuacao.",
-            style: GoogleFonts.ubuntuMono(fontSize: 18),
+            style: TextStyle(fontSize: 18),
           ),
           actions: [
             TextButton(
@@ -129,7 +129,6 @@ class _ReconhecerFormasState extends State<ReconhecerFormas> {
           '\n Reconhecer \n     Formas',
           style: TextStyle(
             fontSize: 30,
-            fontFamily: 'DynaPuff',
             fontWeight: FontWeight.bold,
             letterSpacing: 7,
             foreground: Paint()
@@ -162,13 +161,12 @@ class _ReconhecerFormasState extends State<ReconhecerFormas> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Text(
               'Pontuação: $pontuacao',
               style: TextStyle(
                 fontSize: 40,
-                fontFamily: 'DynaPuff',
                 fontWeight: FontWeight.bold,
                 letterSpacing: 2,
                 foreground: Paint()
@@ -204,15 +202,15 @@ class _ReconhecerFormasState extends State<ReconhecerFormas> {
                 duration: 20, // Duração de 20 segundos
                 initialDuration: 0,
                 controller: _countDownController,
-                width: _getSize(screenWidth, 0.2),
-                height: _getSize(screenWidth, 0.2),
+                width: _getSize(screenWidth, 0.25),
+                height: _getSize(screenWidth, 0.25),
                 ringColor: const Color.fromARGB(255, 230, 54, 54),
                 fillColor: Colors.blue[100]!,
                 backgroundColor: Colors.blue[400],
                 strokeWidth: 10.0,
                 strokeCap: StrokeCap.round,
                 textStyle: TextStyle(
-                  fontSize: _getTextSize(screenWidth, 0.08),
+                  fontSize: _getTextSize(screenWidth, 0.12),
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
@@ -226,14 +224,14 @@ class _ReconhecerFormasState extends State<ReconhecerFormas> {
               height: _getSize(screenHeight, 0.3),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: segundaLinha.map((imagem) {
                 return ElevatedButton(
                   onPressed: () => validarEscolha(imagem),
                   child: Image.asset(
                     'assets/images/formas2/$imagem',
-                    width: _getSize(screenWidth, 0.2),
-                    height: _getSize(screenHeight, 0.15),
+                    width: _getSize(screenWidth, 0.16),
+                    height: _getSize(screenHeight, 0.12),
                   ),
                 );
               }).toList(),

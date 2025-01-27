@@ -13,5 +13,4 @@ class ScreenRoutes {
   static const String kLearnSignLanguageScreen = '/learn-sign-language-screen';
   static const String kIdentifyAlphabetLibras =
       '/identify-alphabet-libras-screen';
-
 }

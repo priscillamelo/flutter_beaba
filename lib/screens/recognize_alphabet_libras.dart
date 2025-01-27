@@ -1,15 +1,18 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_beaba/components/feedback_user.dart';
+import 'package:flutter_beaba/components/text_to_speech_component.dart';
 
-class IdentifyAlphabetLibras extends StatefulWidget {
-  const IdentifyAlphabetLibras({super.key});
+class RecognizeAlphabetLibras extends StatefulWidget {
+  const RecognizeAlphabetLibras({super.key});
 
   @override
-  State<IdentifyAlphabetLibras> createState() => _IdentifyAlphabetLibrasState();
+  State<RecognizeAlphabetLibras> createState() =>
+      _RecognizeAlphabetLibrasState();
 }
 
-class _IdentifyAlphabetLibrasState extends State<IdentifyAlphabetLibras> {
+class _RecognizeAlphabetLibrasState extends State<RecognizeAlphabetLibras> {
   final List<String> alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
   late String currentLetter;
   late List<String> options;
@@ -19,6 +22,8 @@ class _IdentifyAlphabetLibrasState extends State<IdentifyAlphabetLibras> {
   @override
   void initState() {
     super.initState();
+    TextToSpeechComponent.speak("Qual letra do alfabeto esse sinal representa");
+
     _generateNewQuestion();
   }
 
@@ -34,41 +39,33 @@ class _IdentifyAlphabetLibrasState extends State<IdentifyAlphabetLibras> {
     isCorrect = false;
   }
 
-  void _checkAnswer(String selectedLetter) {
+  void _checkAnswer(String selectedLetter) async {
     bool isCorrect = selectedLetter == currentLetter;
 
-    setState(() {
-      _showResultDialog(isCorrect);
-      if (isCorrect) _generateNewQuestion();
-    });
-  }
-
-  void _showResultDialog(bool isCorrect) {
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: Text(isCorrect
-            ? 'Parabéns! Você conseguiu!!'
-            : 'Hummm... Vamos tentar novamente!'),
-        content: Image.asset(
-            isCorrect ? 'assets/images/winner.png' : 'assets/images/loser.png'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text("Continuar"),
-          ),
-        ],
-      ),
-    );
+    if (isCorrect) {
+      FeedbackUser.feedbackRecognize(isCorrect);
+      Future.delayed(
+          Duration(milliseconds: 400),
+          () => setState(() {
+                _generateNewQuestion();
+              }));
+    } else {
+      FeedbackUser.feedbackDrawing(context: context, winner: isCorrect);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Qual é a letra?'),
+        title: const Text(
+          'QUAL É A LETRA?',
+          style: TextStyle(
+            letterSpacing: 3,
+            fontSize: 30,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ),
       body: Center(
         child: Padding(
@@ -98,6 +95,7 @@ class _IdentifyAlphabetLibrasState extends State<IdentifyAlphabetLibras> {
                     .map((letter) => ElevatedButton(
                           onPressed: () => _checkAnswer(letter),
                           style: ElevatedButton.styleFrom(
+                            minimumSize: Size(100, 130),
                             shape: RoundedRectangleBorder(
                               side: BorderSide(color: Colors.black, width: 2),
                               borderRadius: BorderRadius.circular(10),

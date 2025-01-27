@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_beaba/components/feedback_user.dart';
+import 'package:flutter_beaba/components/text_to_speech_component.dart';
 
 class RecognizeColorsScreen extends StatefulWidget {
   const RecognizeColorsScreen({super.key});
@@ -27,14 +29,23 @@ class _RecognizeColorsScreenState extends State<RecognizeColorsScreen> {
     _generateQuestion();
   }
 
+  Future<void> _speakLetter() async {
+    TextToSpeechComponent.speak(
+      "Qual é a cor: $targetColorName",
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    _speakLetter();
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Qual é a cor?',
+          'QUAL É A COR?',
           style: TextStyle(
-            fontSize: 32,
+            letterSpacing: 3,
+            fontWeight: FontWeight.w600,
+            fontSize: 30,
             foreground: Paint()
               ..shader = const LinearGradient(
                 colors: [
@@ -109,33 +120,11 @@ class _RecognizeColorsScreenState extends State<RecognizeColorsScreen> {
     setState(() {});
   }
 
-  void _checkAnswer(String selectedColor) {
-    if (selectedColor == targetColorName) {
-      _showResultDialog(true);
-    } else {
-      _showResultDialog(false);
+  void _checkAnswer(String selectedColor) async {
+    bool isCorrect = selectedColor == targetColorName;
+    await FeedbackUser.feedbackRecognize(isCorrect);
+    if (isCorrect) {
+      Future.delayed(Duration(milliseconds: 500), () => _generateQuestion());
     }
-  }
-
-  void _showResultDialog(bool isCorrect) {
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: Text(isCorrect
-            ? 'Parabéns! Você conseguiu!!'
-            : 'Hummm... Vamos tentar novamente!'),
-        content: Image.asset(
-            isCorrect ? 'assets/images/winner.png' : 'assets/images/loser.png'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              if (isCorrect) _generateQuestion();
-            },
-            child: Text("Continuar"),
-          ),
-        ],
-      ),
-    );
   }
 }
